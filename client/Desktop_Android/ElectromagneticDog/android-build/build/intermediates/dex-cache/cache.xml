@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="false"
+        jar="G:\ElectromagneticDog\client\Desktop_Android\ElectromagneticDog\android-build\libs\QtAndroid-bundled.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="29.0.3"
+        sha1="39c89e9accbc6964314590d25dd7ef16d6278da7">
+        <dex dex="G:\ElectromagneticDog\client\Desktop_Android\ElectromagneticDog\android-build\build\intermediates\pre-dexed\debug\QtAndroid-bundled_341b35f64406eb82084aa5781ca4c93c707adb07.jar" />
+    </item>
+
+</items>
