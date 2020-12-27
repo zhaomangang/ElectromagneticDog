@@ -35,12 +35,15 @@ public:
     QLabel *label_4;
     QFrame *frame;
     QGridLayout *gridLayout;
-    QLabel *label;
-    QLineEdit *input_user;
-    QLabel *label_2;
     QLineEdit *input_password;
+    QLabel *label_2;
+    QLineEdit *input_user;
     QPushButton *button_login;
+    QLabel *label;
+    QWidget *widget;
+    QHBoxLayout *horizontalLayout_2;
     QCheckBox *checkBox_remberpwd;
+    QCheckBox *checkBox;
     QFrame *frame_2;
     QHBoxLayout *horizontalLayout;
     QPushButton *button_regsiter;
@@ -51,7 +54,7 @@ public:
     {
         if (Login->objectName().isEmpty())
             Login->setObjectName(QStringLiteral("Login"));
-        Login->resize(339, 370);
+        Login->resize(339, 399);
         verticalLayout = new QVBoxLayout(Login);
         verticalLayout->setSpacing(6);
         verticalLayout->setContentsMargins(11, 11, 11, 11);
@@ -87,42 +90,34 @@ public:
         gridLayout->setSpacing(6);
         gridLayout->setContentsMargins(11, 11, 11, 11);
         gridLayout->setObjectName(QStringLiteral("gridLayout"));
-        label = new QLabel(frame);
-        label->setObjectName(QStringLiteral("label"));
-        QSizePolicy sizePolicy1(QSizePolicy::Fixed, QSizePolicy::Fixed);
+        input_password = new QLineEdit(frame);
+        input_password->setObjectName(QStringLiteral("input_password"));
+        QSizePolicy sizePolicy1(QSizePolicy::Expanding, QSizePolicy::Fixed);
         sizePolicy1.setHorizontalStretch(0);
         sizePolicy1.setVerticalStretch(0);
-        sizePolicy1.setHeightForWidth(label->sizePolicy().hasHeightForWidth());
-        label->setSizePolicy(sizePolicy1);
-        label->setPixmap(QPixmap(QString::fromUtf8(":/resource/user.png")));
-        label->setAlignment(Qt::AlignCenter);
+        sizePolicy1.setHeightForWidth(input_password->sizePolicy().hasHeightForWidth());
+        input_password->setSizePolicy(sizePolicy1);
+        input_password->setEchoMode(QLineEdit::Password);
 
-        gridLayout->addWidget(label, 0, 0, 1, 1);
-
-        input_user = new QLineEdit(frame);
-        input_user->setObjectName(QStringLiteral("input_user"));
-        QSizePolicy sizePolicy2(QSizePolicy::Expanding, QSizePolicy::Fixed);
-        sizePolicy2.setHorizontalStretch(0);
-        sizePolicy2.setVerticalStretch(0);
-        sizePolicy2.setHeightForWidth(input_user->sizePolicy().hasHeightForWidth());
-        input_user->setSizePolicy(sizePolicy2);
-
-        gridLayout->addWidget(input_user, 0, 1, 1, 1);
+        gridLayout->addWidget(input_password, 1, 1, 1, 1);
 
         label_2 = new QLabel(frame);
         label_2->setObjectName(QStringLiteral("label_2"));
-        sizePolicy1.setHeightForWidth(label_2->sizePolicy().hasHeightForWidth());
-        label_2->setSizePolicy(sizePolicy1);
+        QSizePolicy sizePolicy2(QSizePolicy::Fixed, QSizePolicy::Fixed);
+        sizePolicy2.setHorizontalStretch(0);
+        sizePolicy2.setVerticalStretch(0);
+        sizePolicy2.setHeightForWidth(label_2->sizePolicy().hasHeightForWidth());
+        label_2->setSizePolicy(sizePolicy2);
         label_2->setPixmap(QPixmap(QString::fromUtf8(":/resource/password.png")));
 
         gridLayout->addWidget(label_2, 1, 0, 1, 1);
 
-        input_password = new QLineEdit(frame);
-        input_password->setObjectName(QStringLiteral("input_password"));
-        sizePolicy2.setHeightForWidth(input_password->sizePolicy().hasHeightForWidth());
-        input_password->setSizePolicy(sizePolicy2);
+        input_user = new QLineEdit(frame);
+        input_user->setObjectName(QStringLiteral("input_user"));
+        sizePolicy1.setHeightForWidth(input_user->sizePolicy().hasHeightForWidth());
+        input_user->setSizePolicy(sizePolicy1);
 
-        gridLayout->addWidget(input_password, 1, 1, 1, 1);
+        gridLayout->addWidget(input_user, 0, 1, 1, 1);
 
         button_login = new QPushButton(frame);
         button_login->setObjectName(QStringLiteral("button_login"));
@@ -132,12 +127,35 @@ public:
         icon.addFile(QStringLiteral(":/resource/login.png"), QSize(), QIcon::Normal, QIcon::Off);
         button_login->setIcon(icon);
 
-        gridLayout->addWidget(button_login, 4, 0, 1, 3);
+        gridLayout->addWidget(button_login, 3, 0, 1, 3);
 
-        checkBox_remberpwd = new QCheckBox(frame);
+        label = new QLabel(frame);
+        label->setObjectName(QStringLiteral("label"));
+        sizePolicy2.setHeightForWidth(label->sizePolicy().hasHeightForWidth());
+        label->setSizePolicy(sizePolicy2);
+        label->setPixmap(QPixmap(QString::fromUtf8(":/resource/user.png")));
+        label->setAlignment(Qt::AlignCenter);
+
+        gridLayout->addWidget(label, 0, 0, 1, 1);
+
+        widget = new QWidget(frame);
+        widget->setObjectName(QStringLiteral("widget"));
+        horizontalLayout_2 = new QHBoxLayout(widget);
+        horizontalLayout_2->setSpacing(6);
+        horizontalLayout_2->setContentsMargins(11, 11, 11, 11);
+        horizontalLayout_2->setObjectName(QStringLiteral("horizontalLayout_2"));
+        checkBox_remberpwd = new QCheckBox(widget);
         checkBox_remberpwd->setObjectName(QStringLiteral("checkBox_remberpwd"));
 
-        gridLayout->addWidget(checkBox_remberpwd, 3, 1, 1, 1);
+        horizontalLayout_2->addWidget(checkBox_remberpwd);
+
+        checkBox = new QCheckBox(widget);
+        checkBox->setObjectName(QStringLiteral("checkBox"));
+
+        horizontalLayout_2->addWidget(checkBox);
+
+
+        gridLayout->addWidget(widget, 2, 1, 1, 1);
 
 
         verticalLayout->addWidget(frame);
@@ -170,6 +188,19 @@ public:
 
         verticalLayout->addWidget(frame_2);
 
+        frame->raise();
+        frame_2->raise();
+        frame_3->raise();
+        label_4->raise();
+        input_user->raise();
+        label->raise();
+        label_2->raise();
+        input_password->raise();
+        checkBox_remberpwd->raise();
+        button_login->raise();
+        button_regsiter->raise();
+        button_set->raise();
+        button_find->raise();
 
         retranslateUi(Login);
 
@@ -180,14 +211,15 @@ public:
     {
         Login->setWindowTitle(QApplication::translate("Login", "Login", Q_NULLPTR));
         label_4->setText(QString());
-        label->setText(QString());
+        input_password->setPlaceholderText(QApplication::translate("Login", "\345\257\206\347\240\201", Q_NULLPTR));
+        label_2->setText(QString());
         input_user->setInputMask(QString());
         input_user->setText(QString());
         input_user->setPlaceholderText(QApplication::translate("Login", "\350\264\246\345\217\267/\347\224\250\346\210\267\345\220\215", Q_NULLPTR));
-        label_2->setText(QString());
-        input_password->setPlaceholderText(QApplication::translate("Login", "\345\257\206\347\240\201", Q_NULLPTR));
         button_login->setText(QApplication::translate("Login", "\347\231\273\345\275\225", Q_NULLPTR));
+        label->setText(QString());
         checkBox_remberpwd->setText(QApplication::translate("Login", "\350\256\260\344\275\217\345\257\206\347\240\201", Q_NULLPTR));
+        checkBox->setText(QApplication::translate("Login", "\350\256\260\344\275\217\350\264\246\345\217\267", Q_NULLPTR));
         button_regsiter->setText(QApplication::translate("Login", "\346\263\250\345\206\214\350\264\246\345\217\267", Q_NULLPTR));
         button_set->setText(QApplication::translate("Login", "\346\234\215\345\212\241\345\231\250\351\205\215\347\275\256", Q_NULLPTR));
         button_find->setText(QApplication::translate("Login", "\346\211\276\345\233\236\345\257\206\347\240\201", Q_NULLPTR));

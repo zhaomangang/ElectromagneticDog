@@ -4,5 +4,6 @@
         <file>resource/password.png</file>
         <file>resource/user.png</file>
         <file>resource/ed.png</file>
+        <file>resource/bg.jpg</file>
     </qresource>
 </RCC>
