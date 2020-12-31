@@ -25,13 +25,21 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     main.cpp \
-    login.cpp
+    login.cpp \
+    mainwidget.cpp \
+    chatwidget.cpp \
+    friendbutton.cpp
 
 HEADERS += \
-        login.h
+        login.h \
+    mainwidget.h \
+    chatwidget.h \
+    friendbutton.h
 
 FORMS += \
-        login.ui
+        login.ui \
+    mainwidget.ui \
+    chatwidget.ui
 
 CONFIG += mobility
 MOBILITY =
