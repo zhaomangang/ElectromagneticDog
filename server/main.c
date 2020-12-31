@@ -2,6 +2,7 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <sys/time.h>
+#include <sys/wait.h>
 #include <time.h>
 #include <netinet/in.h>
 #include <unistd.h>
@@ -44,6 +45,8 @@ int main(int argc,char *argv[])
         printf("listen error\n");
         return 0;
     }
+    int status;
+    
 
     for ( ; ;)
     {
@@ -53,6 +56,7 @@ int main(int argc,char *argv[])
             printf("accept error\n");
             return 0;
         }
+        printf("connfd %d",connfd);
         if ((childpid = fork()) < 0)
         {
             //fork error
@@ -67,8 +71,11 @@ int main(int argc,char *argv[])
         else 
         {
             //parent
-            
-
+            if (wait(&status) != childpid)
+            {
+                printf("error %d",status);
+            }
+    
         }
     }
 
