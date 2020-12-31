@@ -28,13 +28,17 @@ SOURCES += \
     login.cpp \
     mainwidget.cpp \
     chatwidget.cpp \
-    friendbutton.cpp
+    friendbutton.cpp \
+    chatsocket.cpp
 
 HEADERS += \
         login.h \
     mainwidget.h \
     chatwidget.h \
-    friendbutton.h
+    friendbutton.h \
+    fixedvalue.h \
+    chatsocket.h \
+    apply_protocl.h
 
 FORMS += \
         login.ui \
