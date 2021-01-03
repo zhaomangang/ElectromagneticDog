@@ -1,4 +1,4 @@
-#Thu Dec 31 21:14:18 CST 2020
+#Sun Jan 03 20:56:35 CST 2021
 base.0=G\:\\ElectromagneticDog\\client\\Desktop_Android\\ElectromagneticDog\\android-build\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\1f\\main
 renamed.0=classes.dex
 file.0=G\:\\ElectromagneticDog\\client\\Desktop_Android\\ElectromagneticDog\\android-build\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\1f\\main\\classes.dex

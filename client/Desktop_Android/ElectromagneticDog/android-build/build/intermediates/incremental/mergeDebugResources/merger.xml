@@ -11,6 +11,7 @@
 <item>libplugins_imageformats_libqtiff.so:plugins/imageformats/libqtiff.so</item>
 <item>libplugins_imageformats_libqwbmp.so:plugins/imageformats/libqwbmp.so</item>
 <item>libplugins_imageformats_libqwebp.so:plugins/imageformats/libqwebp.so</item>
+<item>libplugins_bearer_libqandroidbearer.so:plugins/bearer/libqandroidbearer.so</item>
 
     </array><array name="qt_sources">
         <item>https://download.qt.io/ministro/android/qt5/qt-5.9</item>
@@ -21,5 +22,6 @@
 <item>Qt5Core</item>
 <item>Qt5Gui</item>
 <item>Qt5Widgets</item>
+<item>Qt5Network</item>
 
      </array></file></source><source path="G:\ElectromagneticDog\client\Desktop_Android\ElectromagneticDog\android-build\build\generated\res\rs\debug"/><source path="G:\ElectromagneticDog\client\Desktop_Android\ElectromagneticDog\android-build\build\generated\res\resValues\debug"/></dataSet><dataSet config="debug" generated-set="debug$Generated"><source path="G:\ElectromagneticDog\client\Desktop_Android\ElectromagneticDog\android-build\src\debug\res"/></dataSet><mergedItems/></merger>

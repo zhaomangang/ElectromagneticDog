@@ -6,8 +6,10 @@ ServerInfo::ServerInfo(QWidget *parent) :
     ui(new Ui::ServerInfo)
 {
     ui->setupUi(this);
+
     ip = "";
     port = 0;
+    setWindowModality(Qt::ApplicationModal);
 }
 
 ServerInfo::~ServerInfo()

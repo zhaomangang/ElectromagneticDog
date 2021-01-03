@@ -3,6 +3,8 @@
 
 #define FRIEND_BUTTON_SIZE QSize(100,30)    //好友列表中好友按钮尺寸
 
+#define DEFAULT_IP "192.168.43.2"
+#define DEFAULT_PORT 61521
 
 
 #endif // FIXEDVALUE_H

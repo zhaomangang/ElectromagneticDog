@@ -246,6 +246,9 @@ release/moc_login.cpp: F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtWidgets/QWidget \
 		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/qfiledevice.h \
 		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtGui/qvector2d.h \
 		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtGui/qtouchdevice.h \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtWidgets/QMessageBox \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtWidgets/qmessagebox.h \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtWidgets/qdialog.h \
 		chatsocket.h \
 		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/QObject \
 		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtNetwork/QTcpSocket \
@@ -253,6 +256,18 @@ release/moc_login.cpp: F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtWidgets/QWidget \
 		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtNetwork/qtnetworkglobal.h \
 		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtNetwork/qtnetwork-config.h \
 		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtNetwork/qabstractsocket.h \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtNetwork/QHostAddress \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtNetwork/qhostaddress.h \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/QJsonDocument \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/qjsondocument.h \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/qjsonvalue.h \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/QJsonParseError \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/QFile \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/QJsonObject \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/qjsonobject.h \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/QDebug \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/QJsonArray \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/qjsonarray.h \
 		apply_protocl.h \
 		serverinfo.h \
 		login.h \
@@ -361,6 +376,9 @@ release/moc_mainwidget.cpp: F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtWidgets/QWidg
 		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtGui/qvector2d.h \
 		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtGui/qtouchdevice.h \
 		login.h \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtWidgets/QMessageBox \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtWidgets/qmessagebox.h \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtWidgets/qdialog.h \
 		chatsocket.h \
 		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/QObject \
 		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtNetwork/QTcpSocket \
@@ -368,6 +386,18 @@ release/moc_mainwidget.cpp: F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtWidgets/QWidg
 		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtNetwork/qtnetworkglobal.h \
 		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtNetwork/qtnetwork-config.h \
 		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtNetwork/qabstractsocket.h \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtNetwork/QHostAddress \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtNetwork/qhostaddress.h \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/QJsonDocument \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/qjsondocument.h \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/qjsonvalue.h \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/QJsonParseError \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/QFile \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/QJsonObject \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/qjsonobject.h \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/QDebug \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/QJsonArray \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/qjsonarray.h \
 		apply_protocl.h \
 		serverinfo.h \
 		mainwidget.h \
@@ -546,6 +576,20 @@ release/moc_chatsocket.cpp: F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/QObject 
 		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/qcontiguouscache.h \
 		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/qsharedpointer.h \
 		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/qsharedpointer_impl.h \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtNetwork/QHostAddress \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtNetwork/qhostaddress.h \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/QJsonDocument \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/qjsondocument.h \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/qjsonvalue.h \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/QJsonParseError \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/QFile \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/qfile.h \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/qfiledevice.h \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/QJsonObject \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/qjsonobject.h \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/QDebug \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/QJsonArray \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/qjsonarray.h \
 		chatsocket.h \
 		release/moc_predefs.h \
 		F:/Qt/Qt5.9.0/5.9/mingw53_32/bin/moc.exe
@@ -790,6 +834,9 @@ release/main.o: main.cpp login.h \
 		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/qfiledevice.h \
 		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtGui/qvector2d.h \
 		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtGui/qtouchdevice.h \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtWidgets/QMessageBox \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtWidgets/qmessagebox.h \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtWidgets/qdialog.h \
 		chatsocket.h \
 		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/QObject \
 		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtNetwork/QTcpSocket \
@@ -797,6 +844,18 @@ release/main.o: main.cpp login.h \
 		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtNetwork/qtnetworkglobal.h \
 		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtNetwork/qtnetwork-config.h \
 		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtNetwork/qabstractsocket.h \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtNetwork/QHostAddress \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtNetwork/qhostaddress.h \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/QJsonDocument \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/qjsondocument.h \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/qjsonvalue.h \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/QJsonParseError \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/QFile \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/QJsonObject \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/qjsonobject.h \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/QDebug \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/QJsonArray \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/qjsonarray.h \
 		apply_protocl.h \
 		serverinfo.h \
 		mainwidget.h \
@@ -911,6 +970,9 @@ release/login.o: login.cpp login.h \
 		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/qfiledevice.h \
 		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtGui/qvector2d.h \
 		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtGui/qtouchdevice.h \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtWidgets/QMessageBox \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtWidgets/qmessagebox.h \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtWidgets/qdialog.h \
 		chatsocket.h \
 		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/QObject \
 		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtNetwork/QTcpSocket \
@@ -918,6 +980,18 @@ release/login.o: login.cpp login.h \
 		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtNetwork/qtnetworkglobal.h \
 		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtNetwork/qtnetwork-config.h \
 		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtNetwork/qabstractsocket.h \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtNetwork/QHostAddress \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtNetwork/qhostaddress.h \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/QJsonDocument \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/qjsondocument.h \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/qjsonvalue.h \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/QJsonParseError \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/QFile \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/QJsonObject \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/qjsonobject.h \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/QDebug \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/QJsonArray \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/qjsonarray.h \
 		apply_protocl.h \
 		serverinfo.h \
 		ui_login.h \
@@ -1078,6 +1152,9 @@ release/mainwidget.o: mainwidget.cpp mainwidget.h \
 		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtGui/qvector2d.h \
 		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtGui/qtouchdevice.h \
 		login.h \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtWidgets/QMessageBox \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtWidgets/qmessagebox.h \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtWidgets/qdialog.h \
 		chatsocket.h \
 		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/QObject \
 		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtNetwork/QTcpSocket \
@@ -1085,6 +1162,18 @@ release/mainwidget.o: mainwidget.cpp mainwidget.h \
 		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtNetwork/qtnetworkglobal.h \
 		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtNetwork/qtnetwork-config.h \
 		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtNetwork/qabstractsocket.h \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtNetwork/QHostAddress \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtNetwork/qhostaddress.h \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/QJsonDocument \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/qjsondocument.h \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/qjsonvalue.h \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/QJsonParseError \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/QFile \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/QJsonObject \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/qjsonobject.h \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/QDebug \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/QJsonArray \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/qjsonarray.h \
 		apply_protocl.h \
 		serverinfo.h \
 		ui_mainwidget.h \
@@ -1464,7 +1553,23 @@ release/chatsocket.o: chatsocket.cpp chatsocket.h \
 		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/qset.h \
 		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/qcontiguouscache.h \
 		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/qsharedpointer.h \
-		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/qsharedpointer_impl.h
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/qsharedpointer_impl.h \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtNetwork/QHostAddress \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtNetwork/qhostaddress.h \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/QJsonDocument \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/qjsondocument.h \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/qjsonvalue.h \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/QJsonParseError \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/QFile \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/qfile.h \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/qfiledevice.h \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/QJsonObject \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/qjsonobject.h \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/QDebug \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/QJsonArray \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/qjsonarray.h \
+		fixedvalue.h \
+		apply_protocl.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\chatsocket.o chatsocket.cpp
 
 release/serverinfo.o: serverinfo.cpp serverinfo.h \
@@ -1568,7 +1673,55 @@ release/serverinfo.o: serverinfo.cpp serverinfo.h \
 		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/qfiledevice.h \
 		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtGui/qvector2d.h \
 		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtGui/qtouchdevice.h \
-		ui_serverinfo.h
+		ui_serverinfo.h \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/QVariant \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtWidgets/QAction \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtWidgets/qaction.h \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtGui/qicon.h \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtWidgets/qactiongroup.h \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtWidgets/QApplication \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtWidgets/qapplication.h \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/qcoreapplication.h \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/qeventloop.h \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtWidgets/qdesktopwidget.h \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtGui/qguiapplication.h \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtGui/qinputmethod.h \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtWidgets/QButtonGroup \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtWidgets/qbuttongroup.h \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtWidgets/QGridLayout \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtWidgets/qgridlayout.h \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtWidgets/qlayout.h \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtWidgets/qlayoutitem.h \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtWidgets/qboxlayout.h \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtWidgets/QHeaderView \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtWidgets/qheaderview.h \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtWidgets/qabstractitemview.h \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtWidgets/qabstractscrollarea.h \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtWidgets/qframe.h \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/qabstractitemmodel.h \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/qitemselectionmodel.h \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtWidgets/qabstractitemdelegate.h \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtWidgets/qstyleoption.h \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtWidgets/qabstractspinbox.h \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtGui/qvalidator.h \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtCore/qregularexpression.h \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtWidgets/qslider.h \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtWidgets/qabstractslider.h \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtWidgets/qstyle.h \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtWidgets/qtabbar.h \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtWidgets/qtabwidget.h \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtWidgets/qrubberband.h \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtWidgets/QLabel \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtWidgets/qlabel.h \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtWidgets/QLineEdit \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtWidgets/qlineedit.h \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtGui/qtextcursor.h \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtGui/qtextformat.h \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtGui/qpen.h \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtGui/qtextoption.h \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtWidgets/QPushButton \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtWidgets/qpushbutton.h \
+		F:/Qt/Qt5.9.0/5.9/mingw53_32/include/QtWidgets/qabstractbutton.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\serverinfo.o serverinfo.cpp
 
 release/qrc_img.o: release/qrc_img.cpp 

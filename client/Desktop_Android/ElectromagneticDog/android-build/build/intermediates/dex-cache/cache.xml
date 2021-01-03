@@ -10,5 +10,14 @@
         sha1="39c89e9accbc6964314590d25dd7ef16d6278da7">
         <dex dex="G:\ElectromagneticDog\client\Desktop_Android\ElectromagneticDog\android-build\build\intermediates\pre-dexed\debug\QtAndroid-bundled_341b35f64406eb82084aa5781ca4c93c707adb07.jar" />
     </item>
+    <item
+        is-multidex="false"
+        jar="G:\ElectromagneticDog\client\Desktop_Android\ElectromagneticDog\android-build\libs\QtAndroidBearer-bundled.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="29.0.3"
+        sha1="9ab1f1638d6cb26066cb7a1313a439bb7d21db24">
+        <dex dex="G:\ElectromagneticDog\client\Desktop_Android\ElectromagneticDog\android-build\build\intermediates\pre-dexed\debug\QtAndroidBearer-bundled_ff282b2021f85401e8936caead1c012d3c26e29c.jar" />
+    </item>
 
 </items>
