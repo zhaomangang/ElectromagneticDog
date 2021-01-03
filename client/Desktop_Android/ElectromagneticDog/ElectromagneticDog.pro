@@ -8,6 +8,8 @@ QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
+QT += network
+
 TARGET = ElectromagneticDog
 TEMPLATE = app
 
@@ -29,7 +31,8 @@ SOURCES += \
     mainwidget.cpp \
     chatwidget.cpp \
     friendbutton.cpp \
-    chatsocket.cpp
+    chatsocket.cpp \
+    serverinfo.cpp
 
 HEADERS += \
         login.h \
@@ -38,12 +41,14 @@ HEADERS += \
     friendbutton.h \
     fixedvalue.h \
     chatsocket.h \
-    apply_protocl.h
+    apply_protocl.h \
+    serverinfo.h
 
 FORMS += \
         login.ui \
     mainwidget.ui \
-    chatwidget.ui
+    chatwidget.ui \
+    serverinfo.ui
 
 CONFIG += mobility
 MOBILITY =

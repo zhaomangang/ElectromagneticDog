@@ -3,21 +3,33 @@
 
 MainWidget::MainWidget(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::MainWidget)
+    ui(new Ui::MainWidget),
+    login(NULL),
+    socket(NULL)
 {
     ui->setupUi(this);
+    this->hide();   //隐藏主界面
     if (NULL == login)
     {
         //创建登录对象
+        qDebug()<<"login is null";
         login = new Login();
     }
     if (NULL != login)
     {
-        this->hide();   //隐藏主界面
+        qDebug()<<"login not null";
         login->show();  //显示登录界面
-
     }
+    if (NULL == socket)
+    {
+        socket = new ChatSocket;
+    }
+    connect(login->getServerInfo(),SIGNAL(setInfoSuccess(QString,uint)),
+           socket,SLOT(slotConnectToServer(QString,uint)));
+
 }
+
+
 
 MainWidget::~MainWidget()
 {

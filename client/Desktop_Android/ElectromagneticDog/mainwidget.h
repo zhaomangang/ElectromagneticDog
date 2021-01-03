@@ -3,7 +3,7 @@
 
 #include <QWidget>
 #include "login.h"
-
+#include "chatsocket.h"
 
 namespace Ui {
 class MainWidget;
@@ -20,6 +20,9 @@ public:
 private:
     Ui::MainWidget *ui;
     Login* login;   //登录界面
+    ChatSocket *socket;
+
+
 
 };
 

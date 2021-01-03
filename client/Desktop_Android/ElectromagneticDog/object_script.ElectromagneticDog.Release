@@ -1,0 +1,15 @@
+INPUT(
+./release\main.o
+./release\login.o
+./release\mainwidget.o
+./release\chatwidget.o
+./release\friendbutton.o
+./release\chatsocket.o
+./release\serverinfo.o
+./release\qrc_img.o
+./release\moc_login.o
+./release\moc_mainwidget.o
+./release\moc_chatwidget.o
+./release\moc_chatsocket.o
+./release\moc_serverinfo.o
+);

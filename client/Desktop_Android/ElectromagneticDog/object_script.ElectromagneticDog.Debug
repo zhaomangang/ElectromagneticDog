@@ -1,0 +1,15 @@
+INPUT(
+./debug\main.o
+./debug\login.o
+./debug\mainwidget.o
+./debug\chatwidget.o
+./debug\friendbutton.o
+./debug\chatsocket.o
+./debug\serverinfo.o
+./debug\qrc_img.o
+./debug\moc_login.o
+./debug\moc_mainwidget.o
+./debug\moc_chatwidget.o
+./debug\moc_chatsocket.o
+./debug\moc_serverinfo.o
+);
