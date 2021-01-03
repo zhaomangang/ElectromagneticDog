@@ -1,12 +1,8 @@
 /**
- * \copyright Copyright (c) 1999-2020,西安交大捷普网络科技有限公司
- * 
- * \file debug.h
- * \author xiaoke
- * \version 0.1
- * \date 2020-11-23
- * 
- * \brief 打印调试信息相关接口
+ * \filename write_log.h
+ * \author mason
+ * \time 2020-11-23
+ * \describe 打印调试信息相关接口
  */
 
 #ifndef __WRITE_LOG_H__
@@ -17,12 +13,12 @@
 
 typedef enum
 {
-    PROXY_ERROR = 0,
-    PROXY_WARNING,
-    PROXY_INFO,
-    PROXY_DEBUG,
+    LOG_ERROR = 0,
+    LOG_WARNING,
+    LOG_INFO,
+    LOG_DEBUG,
 
-    PROXY_MAX
+    LOG_MAX
 } debug_level_em;
 
 /**
