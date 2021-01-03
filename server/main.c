@@ -86,10 +86,10 @@ int main(int argc,char *argv[])
             {
                 write_log(LOG_ERROR,"parent close connect fd fail");
             }
-            if (wait(&status) != childpid)
-            {
-                write_log(LOG_ERROR,"error %d",status);
-            }
+           // if (wait(&status) != childpid)
+            //{
+               // write_log(LOG_ERROR,"error %d",status);
+            //}
     
         }
     }
@@ -156,6 +156,7 @@ void connect_deal(int connect_fd)
             //recv data success ,n bit data;
             buff[n+1] = '\0';
             write_log(LOG_DEBUG,"recv data:%s",buff);
+            demo_json(buff);
         }
         else 
         {

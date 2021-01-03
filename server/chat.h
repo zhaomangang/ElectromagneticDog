@@ -26,5 +26,7 @@ typedef struct _CHAT_CONNECT_ {
 
 }CHAT_CONNECT;
 
+extern void demo_json(char* data);
+
 
 #endif
