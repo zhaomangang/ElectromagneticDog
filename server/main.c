@@ -156,7 +156,10 @@ void connect_deal(int connect_fd)
             //recv data success ,n bit data;
             buff[n+1] = '\0';
             write_log(LOG_DEBUG,"recv data:%s",buff);
-            demo_json(buff);
+            if (-1 == chat_message_deal(buff,n,chat_conn))
+            {
+                
+            }
         }
         else 
         {

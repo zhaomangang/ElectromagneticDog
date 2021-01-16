@@ -1,4 +1,4 @@
-#include "../include/dbhelper.h"
+#include "dbhelper.h"
 
 void* InitDbCon2(const char *host, const char *user,const char *passwd, int port, const char *db)
 {
