@@ -1,7 +1,7 @@
 /**
  * \filename write_log.h
  * \author mason
- * \time 2020-11-23
+ * \time 2020-1-10
  * \describe 打印调试信息相关接口
  */
 
@@ -17,7 +17,6 @@ typedef enum
     LOG_WARNING,
     LOG_INFO,
     LOG_DEBUG,
-
     LOG_MAX
 } debug_level_em;
 

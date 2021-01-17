@@ -10,6 +10,7 @@
 #include <time.h>
 #include <netinet/in.h>
 #include <unistd.h>
+
 void demo_json(char *data)
 {
     //从data中解析json结构
@@ -65,6 +66,7 @@ int write_data_to_socket_fd(int fd,void* data,int data_len)
         return -1;
     }
     return write(fd,data,data_len);
+    return 0;
 }
 
 /*
@@ -91,7 +93,7 @@ int save_user_fd_relation_to_redis(int fd,int id)
 *describe:write to fd,if write success return bit nums.else return -1
 */
 
-int get_user_info_from_mysql(char* username,char* icon)
+int get_user_info_from_mysql(int id,char* username,char* icon)
 {
     if (NULL == username || NULL == icon)
     {
@@ -111,7 +113,7 @@ int get_user_info_from_mysql(char* username,char* icon)
 *return: -1:deal error other:send bit nums 
 *describe:write to fd,if write success return bit nums.else return -1
 */
-int construct_userinfo_packet(char* packet)
+int construct_userinfo_packet(int id,char* packet)
 {
     if (NULL == packet)
     {
@@ -120,17 +122,19 @@ int construct_userinfo_packet(char* packet)
     char username[MAX_LEN_USERNAME] = {0};
     char icon[MAX_LEN_ICON] = {0};
     
-    if (!get_user_info_from_mysql(username,icon))
+    if (get_user_info_from_mysql(id,username,icon))
     {
         write_log(LOG_WARNING,"get user info error");
     }
     cJSON* userinfo = NULL;
     userinfo = cJSON_CreateObject();
+    cJSON_AddNumberToObject(userinfo,STR_ID,id);
     cJSON_AddNumberToObject(userinfo,STR_TYPE,MESSAGE_USERINFO);    //add packet type to json
     cJSON_AddStringToObject(userinfo,STR_USERNAME,username);    //add username to json
     cJSON_AddStringToObject(userinfo,STR_ICON,icon);    //add icon to json
-    
-    strncmp(packet,cJSON_Print(userinfo),MAX_LEN_PACKET); //get string from json
+    write_log(LOG_DEBUG,"%s",cJSON_Print(userinfo)); 
+    strncpy(packet,cJSON_Print(userinfo),MAXLINE); //get string from json
+    write_log(LOG_DEBUG,"[%d]%s",strlen(packet),packet);
     return 0;
 }
 
@@ -143,7 +147,7 @@ int construct_userinfo_packet(char* packet)
 *describe:logon packet deal.if id and password is success return 0
 */
 
-int packet_deal_logon(cJSON *packet,CHAT_CONNECT* chat_conn)
+int packet_deal_logon(cJSON *packet,CHAT_CONNECT *chat_conn)
 {
     if (NULL == packet || NULL == chat_conn)
     {
@@ -164,6 +168,7 @@ int packet_deal_logon(cJSON *packet,CHAT_CONNECT* chat_conn)
         if (node->type == cJSON_Number)
         {
             chat_conn->id = node->valueint;
+            write_log(LOG_DEBUG,"id:%d",chat_conn->id);
         }
     }
     node = NULL;
@@ -182,14 +187,20 @@ int packet_deal_logon(cJSON *packet,CHAT_CONNECT* chat_conn)
         }
     }
     /*verify id and password is correct*/
-    if (!verify_logon_info_from_mysql(chat_conn->id,password) && !save_user_fd_relation_to_redis(chat_conn->connect_fd,id))
+    if (!verify_logon_info_from_mysql(chat_conn->id,password) && !save_user_fd_relation_to_redis(chat_conn->connect_fd,chat_conn->id))
     {
         //password and id is success and the id no have logon
         char packet[MAXLINE] = {0};
-        construct_userinfo_packet(packet);
-        write_log(LOG_DEBUG,"s->c:%s",packet);
+        construct_userinfo_packet(chat_conn->id,packet);
+        write_log(LOG_DEBUG,"[len:%d]s->c:%s",strlen(packet),packet);
         write_data_to_socket_fd(chat_conn->connect_fd,packet,strlen(packet));
     }
+    else
+    {
+        //logon info error
+        
+    }
+    return 0;
 }
 
 
@@ -218,7 +229,7 @@ int chat_message_deal(char* data,int data_len,CHAT_CONNECT *chat_conn)
         {
             //get message type success
             type = node->valueint;
-            write_log(LOG_INFO,"id:%d",node->valueint);
+            write_log(LOG_INFO,"type:%d",node->valueint);
         }
     }
     switch (type)

@@ -21,8 +21,11 @@
 #define STR_PASSWORD "password"
 #define STR_USERNAME "username"
 #define STR_ICON    "icon"
+#define STR_ERROR_CODE   "error_code"
+#define STR_ERROR_MSG   "error_msg"
 
 
+#define MESSAGE_LOGON_ERROR -1    //登录错误消息
 #define MESSAGE_LOGON 1 //登录请求
 #define MESSAGE_USERINFO   2   //用户信息
 

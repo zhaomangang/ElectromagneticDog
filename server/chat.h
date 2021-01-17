@@ -23,7 +23,6 @@ typedef struct _CHAT_CONNECT_ {
     char source_ip[RESOURCE_IP_MAX];  //源ip
     int id; //user id
     //...
-
 }CHAT_CONNECT;
 
 //

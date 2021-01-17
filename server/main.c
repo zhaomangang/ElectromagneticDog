@@ -8,8 +8,8 @@
 #include <unistd.h>
 #include <string.h>
 #include <stdlib.h>
-#include "chat.h"
 #include "write_log.h"
+#include "chat.h"
 int main(int argc,char *argv[])
 {
     int listenfd = -1;
@@ -117,6 +117,7 @@ void connect_deal(int connect_fd)
        chat_conn = NULL;
        return;
     }
+    chat_conn->connect_fd = connect_fd;
     struct sockaddr_storage sock_cli;
     socklen_t len = -1;
 

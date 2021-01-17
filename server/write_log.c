@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdarg.h>
+#include <sys/time.h>
 #include "write_log.h"
 
 
@@ -39,7 +40,7 @@ void debug_output(debug_level_em type, const char *file, int lineno, const char 
     if (!file)
         file = "no_src.c";
 
-    char msg[MAX_DEBUG_MSG_SIZE] = {0};
+    char msg[MAX_DEBUG_MSG_SIZE] = {0}; 
     snprintf(msg, MAX_DEBUG_MSG_SIZE, "%8s[%15s:%5d]>>>> ", error_strs[type], file, lineno);
     int idx = strlen(msg);
 
@@ -58,4 +59,7 @@ void debug_output(debug_level_em type, const char *file, int lineno, const char 
     }
     return ;
 }
+
+
+
 
