@@ -22,6 +22,10 @@ private:
     Login* login;   //登录界面
     ChatSocket *socket;
 
+    int id;
+public slots:
+    void slotLogonSuccess(int id,QString username,QString icon);
+
 
 
 };

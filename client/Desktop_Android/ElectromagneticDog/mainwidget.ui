@@ -18,14 +18,14 @@
     <widget class="QWidget" name="widget_userinfo" native="true">
      <layout class="QGridLayout" name="gridLayout">
       <item row="0" column="0" rowspan="2">
-       <widget class="QLabel" name="label">
+       <widget class="QLabel" name="label_icon">
         <property name="text">
          <string>TextLabel</string>
         </property>
        </widget>
       </item>
       <item row="0" column="1">
-       <widget class="QLabel" name="label_2">
+       <widget class="QLabel" name="label_username">
         <property name="text">
          <string>TextLabel</string>
         </property>

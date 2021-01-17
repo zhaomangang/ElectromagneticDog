@@ -27,9 +27,21 @@ MainWidget::MainWidget(QWidget *parent) :
 
     connect(login->getServerInfo(),SIGNAL(setInfoSuccess(QString,uint)),
            socket,SLOT(slotConnectToServer(QString,uint)));
+    connect(socket,SIGNAL(logonSuccess(int,QString,QString)),this,SLOT(slotLogonSuccess(int,QString,QString)));
 }
 
+void MainWidget::slotLogonSuccess(int id, QString username, QString icon)
+{
+    this->show();
+    if (NULL != login)
+    {
+        login->hide();
+        delete login;
+    }
+    ui->label_username->setText(username);
+    ui->label_3->setText(QString("id:%1").arg(id));
 
+}
 
 MainWidget::~MainWidget()
 {

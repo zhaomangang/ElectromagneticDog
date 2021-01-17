@@ -8,7 +8,36 @@ ChatSocket::ChatSocket(QObject *parent) : QObject(parent),client_socket(NULL)
         client_socket = new QTcpSocket();
     }
     client_socket->connectToHost(QHostAddress(DEFAULT_IP),DEFAULT_PORT);
+    connect(client_socket,SIGNAL(readyRead()),this,SLOT(slotRecv()));
     qDebug()<<"connect "<<QHostAddress(DEFAULT_IP)<<DEFAULT_PORT;
+}
+void ChatSocket::slotRecv()
+{
+    /**解析包类型**/
+    QByteArray allData = client_socket->readAll();//取出消息内容
+    qDebug()<<allData;
+    //收到新数据
+    QJsonParseError json_error;
+    QJsonDocument jsonDoc(QJsonDocument::fromJson(allData, &json_error));
+    if(json_error.error != QJsonParseError::NoError)
+    {
+        qDebug() << "json error!"<<json_error.errorString();
+        return;
+    }
+    QJsonObject rootObj = jsonDoc.object();
+    //因为是预先定义好的JSON数据格式，所以这里可以这样读取
+    int type = -1;
+    type = rootObj[NODE_TYPE].toInt();
+    qDebug()<<type;
+    switch (type) {
+    case TYPE_LOGON_SUCCESS:
+        qDebug()<<rootObj[NODE_ID].toInt()<<rootObj[NODE_USERNAME].toString()<<rootObj[NODE_ICON].toString();
+        emit logonSuccess(rootObj[NODE_ID].toInt(),rootObj[NODE_USERNAME].toString(),rootObj[NODE_ICON].toString());
+        break;
+    default:
+        break;
+    }
+
 }
 
 void ChatSocket::slotConnectToServer(QString ip, unsigned int port)

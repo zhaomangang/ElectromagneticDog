@@ -138,7 +138,27 @@ int construct_userinfo_packet(int id,char* packet)
     return 0;
 }
 
+/*
+*name:construct_logon_error_packet(char* packet)
+*inputparam:id
+*outputparam:username,icon
+*return: -1:deal error other:send bit nums 
+*describe:write to fd,if write success return bit nums.else return -1
+*/
 
+int construct_logon_error_packet(char* packet)
+{
+    if (NULL == packet)
+    {
+        return -1;
+    }
+    cJSON* logon_error = NULL;
+    logon_error = cJSON_CreateObject();
+    cJSON_AddNumberToObject(userinfo,STR_TYPE,MESSAGE_LOGON_ERROR);    //add packet type to json
+    strncpy(packet,cJSON_Print(userinfo),MAXLINE); //get string from json
+    write_log(LOG_DEBUG,"[%d]%s",strlen(packet),packet);
+    return 0;
+}
 
 /*
 *name:packet_deal_logon
@@ -187,19 +207,19 @@ int packet_deal_logon(cJSON *packet,CHAT_CONNECT *chat_conn)
         }
     }
     /*verify id and password is correct*/
+    char packet[MAXLINE] = {0};
     if (!verify_logon_info_from_mysql(chat_conn->id,password) && !save_user_fd_relation_to_redis(chat_conn->connect_fd,chat_conn->id))
     {
         //password and id is success and the id no have logon
-        char packet[MAXLINE] = {0};
         construct_userinfo_packet(chat_conn->id,packet);
-        write_log(LOG_DEBUG,"[len:%d]s->c:%s",strlen(packet),packet);
-        write_data_to_socket_fd(chat_conn->connect_fd,packet,strlen(packet));
     }
     else
     {
         //logon info error
-        
+        construct_logon_error_packet(packet);
     }
+    write_log(LOG_DEBUG,"[len:%d]s->c:%s",strlen(packet),packet);
+    write_data_to_socket_fd(chat_conn->connect_fd,packet,strlen(packet));
     return 0;
 }
 

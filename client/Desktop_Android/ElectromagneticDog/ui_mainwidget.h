@@ -31,8 +31,8 @@ public:
     QVBoxLayout *verticalLayout;
     QWidget *widget_userinfo;
     QGridLayout *gridLayout;
-    QLabel *label;
-    QLabel *label_2;
+    QLabel *label_icon;
+    QLabel *label_username;
     QLabel *label_3;
     QTabWidget *tabWidget;
     QWidget *tab;
@@ -53,15 +53,15 @@ public:
         widget_userinfo->setObjectName(QStringLiteral("widget_userinfo"));
         gridLayout = new QGridLayout(widget_userinfo);
         gridLayout->setObjectName(QStringLiteral("gridLayout"));
-        label = new QLabel(widget_userinfo);
-        label->setObjectName(QStringLiteral("label"));
+        label_icon = new QLabel(widget_userinfo);
+        label_icon->setObjectName(QStringLiteral("label_icon"));
 
-        gridLayout->addWidget(label, 0, 0, 2, 1);
+        gridLayout->addWidget(label_icon, 0, 0, 2, 1);
 
-        label_2 = new QLabel(widget_userinfo);
-        label_2->setObjectName(QStringLiteral("label_2"));
+        label_username = new QLabel(widget_userinfo);
+        label_username->setObjectName(QStringLiteral("label_username"));
 
-        gridLayout->addWidget(label_2, 0, 1, 1, 1);
+        gridLayout->addWidget(label_username, 0, 1, 1, 1);
 
         label_3 = new QLabel(widget_userinfo);
         label_3->setObjectName(QStringLiteral("label_3"));
@@ -113,8 +113,8 @@ public:
     void retranslateUi(QWidget *MainWidget)
     {
         MainWidget->setWindowTitle(QApplication::translate("MainWidget", "Form", Q_NULLPTR));
-        label->setText(QApplication::translate("MainWidget", "TextLabel", Q_NULLPTR));
-        label_2->setText(QApplication::translate("MainWidget", "TextLabel", Q_NULLPTR));
+        label_icon->setText(QApplication::translate("MainWidget", "TextLabel", Q_NULLPTR));
+        label_username->setText(QApplication::translate("MainWidget", "TextLabel", Q_NULLPTR));
         label_3->setText(QApplication::translate("MainWidget", "TextLabel", Q_NULLPTR));
         tabWidget->setTabText(tabWidget->indexOf(tab), QApplication::translate("MainWidget", "\350\201\212\345\244\251", Q_NULLPTR));
         tabWidget->setTabText(tabWidget->indexOf(tab_2), QApplication::translate("MainWidget", "\346\226\207\344\273\266", Q_NULLPTR));

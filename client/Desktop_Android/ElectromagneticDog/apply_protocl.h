@@ -37,5 +37,6 @@
 #define NODE_ID "id"
 #define NODE_USERNAME "username"
 #define NODE_PASSWORD "password"
+#define NODE_ICON "icon"
 
 #endif // APPLY_PROTOCL_H
