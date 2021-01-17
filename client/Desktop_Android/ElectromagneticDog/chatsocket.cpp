@@ -30,9 +30,12 @@ void ChatSocket::slotRecv()
     type = rootObj[NODE_TYPE].toInt();
     qDebug()<<type;
     switch (type) {
-    case TYPE_LOGON_SUCCESS:
+    case TYPE_LOGON_SUCCESS:    /*登录成功消息*/
         qDebug()<<rootObj[NODE_ID].toInt()<<rootObj[NODE_USERNAME].toString()<<rootObj[NODE_ICON].toString();
         emit logonSuccess(rootObj[NODE_ID].toInt(),rootObj[NODE_USERNAME].toString(),rootObj[NODE_ICON].toString());
+        break;
+    case TYPE_LOGON_ERROR:  /*登录失败消息*/
+        emit logonFailed();
         break;
     default:
         break;

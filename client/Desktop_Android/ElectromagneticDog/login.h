@@ -25,6 +25,7 @@ private slots:
 
     void on_button_set_clicked();
 public slots:
+    void slotLogonFail();
 
 
 private:

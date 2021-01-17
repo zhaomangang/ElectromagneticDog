@@ -211,10 +211,10 @@ public:
         checkBox_remberpwd->setText(QApplication::translate("Login", "\350\256\260\344\275\217\345\257\206\347\240\201", Q_NULLPTR));
         checkBox->setText(QApplication::translate("Login", "\350\256\260\344\275\217\350\264\246\345\217\267", Q_NULLPTR));
         input_password->setInputMask(QString());
-        input_password->setText(QString());
+        input_password->setText(QApplication::translate("Login", "Z001221z", Q_NULLPTR));
         input_password->setPlaceholderText(QApplication::translate("Login", "\345\257\206\347\240\201", Q_NULLPTR));
         input_user->setInputMask(QString());
-        input_user->setText(QString());
+        input_user->setText(QApplication::translate("Login", "100001", Q_NULLPTR));
         input_user->setPlaceholderText(QApplication::translate("Login", "\350\264\246\345\217\267", Q_NULLPTR));
         button_regsiter->setText(QApplication::translate("Login", "\346\263\250\345\206\214\350\264\246\345\217\267", Q_NULLPTR));
         button_set->setText(QApplication::translate("Login", "\346\234\215\345\212\241\345\231\250\351\205\215\347\275\256", Q_NULLPTR));

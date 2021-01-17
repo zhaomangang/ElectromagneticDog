@@ -138,7 +138,7 @@
          <string/>
         </property>
         <property name="text">
-         <string/>
+         <string>Z001221z</string>
         </property>
         <property name="echoMode">
          <enum>QLineEdit::Password</enum>
@@ -163,7 +163,7 @@
          <string/>
         </property>
         <property name="text">
-         <string/>
+         <string>100001</string>
         </property>
         <property name="maxLength">
          <number>10</number>

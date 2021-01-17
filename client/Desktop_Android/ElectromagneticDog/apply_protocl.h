@@ -12,7 +12,7 @@
 
 /********************消息类型******************************/
 
-
+#define TYPE_LOGON_ERROR -1    //登录错误消息
 #define TYPE_ERROR 0   //错误
 #define TYPE_LOGIN 1  //登录
 #define TYPE_LOGON_SUCCESS 2 //登录成功

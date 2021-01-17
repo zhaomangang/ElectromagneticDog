@@ -21,7 +21,7 @@ private:
     QTcpSocket* client_socket;  //客户端套接字
 signals:
     void logonSuccess(int id,QString username,QString icon);
-
+    void logonFailed();
 private slots:
 
 

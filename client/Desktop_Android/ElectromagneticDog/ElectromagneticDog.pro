@@ -32,7 +32,8 @@ SOURCES += \
     chatwidget.cpp \
     friendbutton.cpp \
     chatsocket.cpp \
-    serverinfo.cpp
+    serverinfo.cpp \
+    frilist.cpp
 
 HEADERS += \
         login.h \
@@ -42,7 +43,8 @@ HEADERS += \
     fixedvalue.h \
     chatsocket.h \
     apply_protocl.h \
-    serverinfo.h
+    serverinfo.h \
+    frilist.h
 
 FORMS += \
         login.ui \
