@@ -18,3 +18,5 @@ CREATE TABLE `user_info`
 	last_login int(11)	COMMENT	'上次登录时间戳',
 	PRIMARY KEY (id)
 ) ENGINE = InnoDB;
+
+

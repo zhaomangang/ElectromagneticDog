@@ -331,7 +331,6 @@ int packet_deal_logon(cJSON *packet,CHAT_CONNECT *chat_conn)
     write_log(LOG_DEBUG,"[len:%d]s->c:%s",strlen(send_packet),send_packet);
     write_data_to_socket_fd(chat_conn->connect_fd,send_packet,strlen(send_packet));
 
-
     return 0;
 }
 

@@ -43,7 +43,7 @@ rn:每页数目
 
 
 获取播放url
-http://antiserver.kuwo.cn/anti.s?type=convert_url&rid=MUSIC_440613&format=mp3&response=url
+http://antiserver.kuwo.cn/anti.s?type=convert_url&rid=MUSIC_228908&format=mp3&response=url
 
 rid:上一api返回的json中"MUSICRID"字段值
 
