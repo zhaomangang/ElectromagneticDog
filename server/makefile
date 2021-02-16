@@ -1,4 +1,7 @@
 server:main.c chat.h
-	gcc main.c chat.c chat.h cJSON.c cJSON.h message_type.h write_log.c write_log.h -o server
+	gcc *.c *.h -o server -lhiredis -L/usr/lib64/mysql -lmysqlclient   -I/usr/include/mysql
 clean:
 	rm server
+
+install:
+
