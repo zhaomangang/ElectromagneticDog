@@ -7,6 +7,7 @@ INPUT(
 ./debug\chatsocket.o
 ./debug\serverinfo.o
 ./debug\frilist.o
+./debug\music.o
 ./debug\qrc_img.o
 ./debug\moc_login.o
 ./debug\moc_mainwidget.o
@@ -14,4 +15,5 @@ INPUT(
 ./debug\moc_chatsocket.o
 ./debug\moc_serverinfo.o
 ./debug\moc_frilist.o
+./debug\moc_music.o
 );

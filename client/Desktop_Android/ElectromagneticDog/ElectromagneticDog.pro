@@ -5,7 +5,7 @@
 #-------------------------------------------------
 
 QT       += core gui
-
+QT       += multimedia
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 QT += network
@@ -33,7 +33,8 @@ SOURCES += \
     friendbutton.cpp \
     chatsocket.cpp \
     serverinfo.cpp \
-    frilist.cpp
+    frilist.cpp \
+    music.cpp
 
 HEADERS += \
         login.h \
@@ -44,7 +45,8 @@ HEADERS += \
     chatsocket.h \
     apply_protocl.h \
     serverinfo.h \
-    frilist.h
+    frilist.h \
+    music.h
 
 FORMS += \
         login.ui \

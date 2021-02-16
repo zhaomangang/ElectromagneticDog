@@ -12,6 +12,15 @@
     </item>
     <item
         is-multidex="false"
+        jar="G:\ElectromagneticDog\client\Desktop_Android\ElectromagneticDog\android-build\libs\QtMultimedia-bundled.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="29.0.3"
+        sha1="a5fc0583b5553def4cfc01757a2271391ecb1297">
+        <dex dex="G:\ElectromagneticDog\client\Desktop_Android\ElectromagneticDog\android-build\build\intermediates\pre-dexed\debug\QtMultimedia-bundled_8a29381da99896711b194f45b2bc6cf36841d41b.jar" />
+    </item>
+    <item
+        is-multidex="false"
         jar="G:\ElectromagneticDog\client\Desktop_Android\ElectromagneticDog\android-build\libs\QtAndroidBearer-bundled.jar"
         jumboMode="false"
         optimize="true"

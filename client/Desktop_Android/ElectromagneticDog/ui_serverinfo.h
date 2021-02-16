@@ -76,7 +76,7 @@ public:
         label_2->setText(QApplication::translate("ServerInfo", "port", Q_NULLPTR));
         lineEdit_port->setText(QApplication::translate("ServerInfo", "61521", Q_NULLPTR));
         label->setText(QApplication::translate("ServerInfo", "ip", Q_NULLPTR));
-        lineEdit_ip->setText(QApplication::translate("ServerInfo", "192.168.43.2", Q_NULLPTR));
+        lineEdit_ip->setText(QApplication::translate("ServerInfo", "192.168.31.95", Q_NULLPTR));
         pushButton_ensure->setText(QApplication::translate("ServerInfo", "\347\241\256\345\256\232", Q_NULLPTR));
     } // retranslateUi
 
