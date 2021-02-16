@@ -11,6 +11,8 @@
 
 #define     MAX_DEBUG_MSG_SIZE      1024    /** 单条调试信息的最大长度 */
 
+#define     MAX_TIME_STR    64
+
 typedef enum
 {
     LOG_ERROR = 0,

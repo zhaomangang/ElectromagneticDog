@@ -1,2 +1,60 @@
 查看防火墙状态 systemctl status firewalld.service
 关闭防火墙 systemctl stop firewalld.service    
+
+
+
+hredis安装
+$ git clone https://github.com/redis/hiredis.git
+$ cd hiredis
+$ make 
+$ make install
+$ cp libhiredis.so /usr/lib64 /usr/lib 
+$ /sbin/ldconfig
+
+#include <stdio.h>
+#include <hiredis/hiredis.h>
+
+
+int main() {
+    redisContext *conn = redisConnect("127.0.0.1", 6379);
+    if (conn == NULL || conn->err) {
+        if (conn) {
+            printf("Error: %s\n", conn->errstr);
+        } else {
+            printf("Can't allocate redis context\n");
+        }
+    }
+
+    redisReply *reply = redisCommand(conn, "set foo 123");
+    freeReplyObject(reply);
+
+    reply = redisCommand(conn, "get foo");
+    printf("foo: %s\n", reply->str);
+    freeReplyObject(reply);
+
+    redisFree(conn);
+    return 0;
+}
+
+
+修改时间
+列出时区：  timedatectl list-timezones
+ 
+设置时区：timedatectl set-timezone Asia/Shanghai
+
+
+#查看mysql服务是否启动
+
+service mysqld status
+启动服务：
+
+systemctl start mysqld
+
+7.开放3306端口
+1 mysql>GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY 'qaz-123' WITH GRANT OPTION;
+2 mysql>FLUSH PRIVILEGES;
+3 mysql>exit;
+开启防火墙mysql 3306端口的外部访问：
+
+1 firewall-cmd --zone=public --add-port=3306/tcp --permanent
+2 firewall-cmd --reload
