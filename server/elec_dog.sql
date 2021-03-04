@@ -20,3 +20,13 @@ CREATE TABLE `user_info`
 ) ENGINE = InnoDB;
 
 
+
+-- 好友关系表
+
+CREATE TABLE `relation_friend` (
+  `index` int(10) NOT NULL AUTO_INCREMENT COMMENT '序号',
+  `my_id` int(11) NOT NULL COMMENT '用户id',
+  `friend_id` int(11) NOT NULL COMMENT '好友id',
+  `add_time` int(11) DEFAULT NULL COMMENT '添加时间',
+  PRIMARY KEY (`index`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;

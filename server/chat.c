@@ -75,10 +75,109 @@ int verify_pwd_by_decode(char* pwd, char* db_pwd)
     if (0 == strcmp(db_pwd,pwd))
     {
         //密码正确
+        write_log(LOG_DEBUG,"pwd is ok");
         return 0;
     }
-    return 0;
+    write_log(LOG_DEBUG,"pwd is error %s %s",pwd, db_pwd);
+    return 1;
 }
+
+/*
+*name:get_friend_list_from_mysql
+*inputparam:id
+*return: -1:deal error 0:success 1:password/id error 
+*describe:从数据库中加载好友列表
+*/
+int get_friend_list_from_mysql(int id, char* packet)
+{
+    if (NULL == packet)
+    {
+        return -1;
+    }
+    char sql_str[MAX_LEN_SQL_STR]={0};
+    struct DbResult *dbResult = NULL;
+    int ret = 0;
+    char pwd[MAX_LEN_PWD] = {0};
+    cJSON* friend_list = NULL;
+    friend_list = cJSON_CreateObject();
+    cJSON_AddNumberToObject(friend_list,STR_TYPE,MESSAGE_FRIEND_LIST_RESPONSE);
+    /*查询pwd*/
+    if (NULL == g_mysql_conn)//init
+    {
+        init_mysql_conn();
+        if(NULL == g_mysql_conn)
+        {
+            write_log(LOG_ERROR,"connect mysql error");
+            return -1;
+        }    
+    }
+    snprintf(sql_str, sizeof(sql_str),SQL_SELECT_FRIEND_ALL,id);
+    write_log(LOG_DEBUG,"%s",sql_str);
+    if (NULL != g_mysql_conn)
+    {
+        //查pwd
+        dbResult = CreateDbResult();
+        ret = db_QuerySql(g_mysql_conn, dbResult, sql_str);//querys
+        write_log(LOG_DEBUG,"g not null %d dbresult %p",ret,dbResult);
+        if (1 != ret)
+        {
+            if (dbResult)
+            {
+                FreeDbResult(dbResult);
+                dbResult = NULL;
+            }
+            write_log(LOG_ERROR,"not have pwd by id:%d",id);
+            return -1;
+        }
+        if (NULL != dbResult && dbResult->nrow > 0)
+        {
+            int row = 0;
+            for (row = 0; row < dbResult->nrow; row++)
+            {
+                cJSON* list = NULL;
+                char tempname[LISTENQ] = {0};
+                snprintf(tempname,sizeof(tempname),"%d",row);
+                list = cJSON_AddObjectToObject(friend_list,tempname);
+                //循环遍历select结果每一行
+                if (NULL != dbResult->rows[row][0])
+                {
+                    //friend_id
+                    cJSON_AddNumberToObject(list,STR_FRIEND_ID,atoi(dbResult->rows[row][0]));
+                }
+                if (NULL != dbResult->rows[row][1])
+                {
+                    //friend_name
+                    cJSON_AddStringToObject(list,STR_FRIEND_NAME,dbResult->rows[row][1]);  
+                }
+                if (NULL != dbResult->rows[row][2])
+                {
+                    //remark
+                    cJSON_AddStringToObject(list,STR_REMARK,dbResult->rows[row][2]);
+                }
+                if (NULL != dbResult->rows[row][3])
+                {
+                    cJSON_AddStringToObject(list,STR_ICON,dbResult->rows[row][3]);
+                }   
+            }
+            cJSON_AddNumberToObject(friend_list,STR_NUM,dbResult->nrow);
+            strncpy(packet,cJSON_Print(friend_list),MAXLINE); //get string from json
+            FreeDbResult(dbResult);
+            dbResult = NULL; 
+        }
+        else
+        {
+            write_log(LOG_ERROR,"not have result by id:%d",id);
+            return -1;
+        }
+        if (dbResult)
+        {
+            FreeDbResult(dbResult);
+            dbResult = NULL; 
+        }
+    }//mysqlconn
+
+}
+
 
 /*
 *name:verify_logon_info_from_mysql
@@ -318,7 +417,7 @@ int packet_deal_logon(cJSON *packet,CHAT_CONNECT *chat_conn)
     }
     /*verify id and password is correct*/
     char send_packet[MAXLINE] = {0};
-    if (!verify_logon_info_from_mysql(chat_conn->id,send_packet,chat_conn) && !save_user_fd_relation_to_redis(chat_conn->connect_fd,chat_conn->id))
+    if (!verify_logon_info_from_mysql(chat_conn->id,password,chat_conn) && !save_user_fd_relation_to_redis(chat_conn->connect_fd,chat_conn->id))
     {
         //password and id is success and the id no have logon
         construct_userinfo_packet(chat_conn,send_packet);
@@ -332,6 +431,44 @@ int packet_deal_logon(cJSON *packet,CHAT_CONNECT *chat_conn)
     write_data_to_socket_fd(chat_conn->connect_fd,send_packet,strlen(send_packet));
 
     return 0;
+}
+
+/*
+*name:logout_deal  
+*inputparam:id
+*return: 0：not online, 在线：返回id对应的fd
+*describe:判断用户是否在线
+*/
+int isOnLine(int id)
+{
+    int fd = 0;
+    if (NULL == g_redis_conn)
+    {
+        //未初始化redis连接
+        if (-1 == init_redis_connect())
+        {
+            //初始化失败，直接返回错误，因为无法断定当前redis情况
+            write_log(LOG_ERROR,"redis maybe is die");
+            return fd;
+        }
+    }
+    redisReply *reply = redisCommand(g_redis_conn, "get %d",id);
+    write_log(LOG_INFO,"redis_cmd:[get %d]",id);
+    if (REDIS_REPLY_NIL != reply->type)
+    {
+        //查到该key，证明该id当前已登录
+        fd = atoi(reply->str);
+        write_log(LOG_DEBUG,"user %d is online socket_fd = %d",id,fd);
+    }
+    else
+    {
+        write_log(LOG_DEBUG,"user %d is not online",id);
+    }
+    //释放redis资源
+    freeReplyObject(reply);
+   // redisFree(g_redis_conn);
+    
+    return fd;
 }
 
 /*
@@ -368,6 +505,126 @@ void logout_deal(CHAT_CONNECT *chat_conn)
 }
 
 
+
+
+/*
+*name:packet_deal_friend_list
+*inputparam:packet
+*return: -1:deal error 0:success 1:password/id error 
+*describe:处理好友列表获取请求
+*/
+
+int packet_deal_friend_list(cJSON *packet,CHAT_CONNECT *chat_conn)
+{
+    if (NULL == packet || NULL == chat_conn)
+    {
+        return -1;
+    }
+    char send_packet[MAXLINE] = {0};
+    get_friend_list_from_mysql(chat_conn->id,send_packet);
+    write_log(LOG_DEBUG,"%s",send_packet);
+    write_data_to_socket_fd(chat_conn->connect_fd,send_packet,strlen(send_packet));
+
+}
+
+/*
+*name:packet_deal_chat_message
+*inputparam:packet
+*return: -1:deal error 0:success 1:password/id error 
+*describe:处理转发聊天消息
+*/
+int packet_deal_chat_message(char* message,cJSON *packet,CHAT_CONNECT *chat_conn)
+{
+    if (NULL == message || NULL == packet || NULL == chat_conn)
+    {
+        return -1;
+    }
+    /*解析数据包*/
+    cJSON *node = NULL;
+    int send_id = -1;
+    int recv_id = -1;
+    char send_time[TIME_MAX_STR] = {0};
+    char message_date[MAXLINE] = {0};
+    node = cJSON_GetObjectItem(packet,STR_SEND_ID);
+    if (NULL == node)
+    {
+        //未发现send_id
+        write_log(LOG_WARNING,"not find send_id\n%s",message);
+        return -1;
+    }
+    else
+    {
+        if (cJSON_Number == node->type)
+        {
+            /*又可能是其它伪装客户端消息，因此应校验发送方id是否绑定当前套接字。后期再做处理*/
+            send_id = node->valueint;
+            write_log(LOG_DEBUG,"send_id = %d",send_id);
+        }
+    }
+    node = NULL;
+    node = cJSON_GetObjectItem(packet,STR_RECV_ID);
+    if (NULL == node)
+    {
+        //未发现recv_id
+        write_log(LOG_WARNING,"not find recv_id\n%s",message);
+        return -1;
+    }
+    else
+    {
+        if (cJSON_Number == node->type)
+        {
+            /**/
+            recv_id = node->valueint;
+            write_log(LOG_DEBUG,"recv_id = %d",recv_id);
+        }
+    }
+    node = NULL;
+    node = cJSON_GetObjectItem(packet,STR_TIME);
+    if (NULL == node)
+    {
+        //未发现time,time只是记录发送时间，重要性较低，因此如果未发现time继续进行处理
+        write_log(LOG_WARNING,"not find time\n%s",message);
+    }
+    else
+    {
+        if (cJSON_String == node->type)
+        {
+            /**/
+            strncpy(send_time,node->valuestring,TIME_MAX_STR);
+            write_log(LOG_DEBUG,"time is %s",send_time);
+        }
+    }
+    node = NULL;
+    node = cJSON_GetObjectItem(packet,STR_MESSAGE_DATA);
+    if (NULL == node)
+    {
+        //未发现消息
+        write_log(LOG_WARNING,"not find message\n%s",message);
+        return -1;
+    }
+    else
+    {
+        if (cJSON_String == node->type)
+        {
+            /**/
+            strncpy(message_date,node->valuestring,MAXLINE);
+            write_log(LOG_DEBUG,"message is %s",message_date);
+        }
+    }
+    /*解析完成，根据接收方是否在线决定直接发送还是存入数据库*/
+    int recv_fd = isOnLine(recv_id);
+    write_log(LOG_DEBUG,"is online %d packet string:%s",recv_fd,message);
+    if (recv_fd)
+    {
+        //接收方在线
+        write_data_to_socket_fd(recv_fd,message,strlen(message));
+    }
+    else
+    {
+        //不在线
+    }
+}
+
 /*
 *name:chat_message_deal
 *inputparam:data,data_len
@@ -401,7 +658,12 @@ int chat_message_deal(char* data,int data_len,CHAT_CONNECT *chat_conn)
     case MESSAGE_LOGON: /*登录请求*/
         packet_deal_logon(json,chat_conn);
         break;
-    
+    case MESSAGE_FRIEND_LIST:   /*好友列表请求*/
+        packet_deal_friend_list(json,chat_conn);
+        break;
+    case MESSAGE_CHAT_DATE:     /*聊天消息*/
+        packet_deal_chat_message(data,json,chat_conn);
+        break;
     default:
         break;
     }

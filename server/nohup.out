@@ -1,0 +1,120 @@
+ [Debug][2021-03-01T 16:17:59Z][         main.c:   38]>>>> listen port:20976  61521
+ [Debug][2021-03-01T 16:18:10Z][         main.c:   38]>>>> listen port:20976  61521
+ [Debug][2021-03-01T 16:18:35Z][         main.c:   61]>>>> connfd 4
+ [Debug][2021-03-01T 16:18:35Z][         main.c:   71]>>>> child pid 7009
+
+ [Debug][2021-03-01T 16:18:35Z][         main.c:  135]>>>> source ip:192.168.1.6
+ [Debug][2021-03-01T 16:18:35Z][         main.c:  136]>>>> source port:45272
+ [Debug][2021-03-01T 16:18:36Z][         main.c:  159]>>>> recv data:{
+    "id": 100002,
+    "password": "Z001221z",
+    "type": 1,
+    "username": ""
+}
+
+  [Info][2021-03-01T 16:18:36Z][         chat.c:  517]>>>> type:1
+ [Debug][2021-03-01T 16:18:36Z][         chat.c:  400]>>>> id:100002
+ [Debug][2021-03-01T 16:18:36Z][         chat.c:  211]>>>> SELECT `pwd`,`user_name`,`icon` FROM `elec_dog`.`user_info` WHERE `user_id` = 100002
+ [Debug][2021-03-01T 16:18:36Z][         chat.c:  217]>>>> g not null 1 dbresult 0x263be80
+ [Debug][2021-03-01T 16:18:36Z][         chat.c:  232]>>>> userid:100002 pwd from mysql is:Z001221z
+ [Debug][2021-03-01T 16:18:36Z][         chat.c:  263]>>>> compare begin
+ [Debug][2021-03-01T 16:18:36Z][         chat.c:   78]>>>> pwd is ok
+ [Debug][2021-03-01T 16:18:36Z][         chat.c:   55]>>>> init redis conn success
+  [Info][2021-03-01T 16:18:36Z][         chat.c:  304]>>>> redis_cmd:[get 100002]
+ [Debug][2021-03-01T 16:18:36Z][         chat.c:  316]>>>> set 100002 4
+ [Debug][2021-03-01T 16:18:36Z][         chat.c:  344]>>>> {
+	"id":	100002,
+	"type":	2,
+	"username":	"内测1",
+	"icon":	"https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1984486517,653178712&fm=26&gp=0.jpg"
+}
+ [Debug][2021-03-01T 16:18:36Z][         chat.c:  346]>>>> [159]{
+	"id":	100002,
+	"type":	2,
+	"username":	"内测1",
+	"icon":	"https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1984486517,653178712&fm=26&gp=0.jpg"
+}
+ [Debug][2021-03-01T 16:18:36Z][         chat.c:  430]>>>> [len:159]s->c:{
+	"id":	100002,
+	"type":	2,
+	"username":	"内测1",
+	"icon":	"https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1984486517,653178712&fm=26&gp=0.jpg"
+}
+ [Debug][2021-03-01T 16:18:37Z][         main.c:  159]>>>> recv data:{
+    "id": 100002,
+    "type": 3
+}
+"
+  [Info][2021-03-01T 16:18:37Z][         chat.c:  517]>>>> type:3
+ [Debug][2021-03-01T 16:18:37Z][         chat.c:  115]>>>> SELECT `user_id`, `user_name`, `remark`, `icon` FROM `user_info`, `relation_friend`                                 WHERE `relation_friend`.`my_id` = 100002 AND `user_info`.`user_id` = `relation_friend`.`friend_id`
+ [Debug][2021-03-01T 16:18:37Z][         chat.c:  121]>>>> g not null 1 dbresult 0x263be80
+ [Debug][2021-03-01T 16:18:37Z][         chat.c:  487]>>>> {
+	"type":	5,
+	"0":	{
+		"friend_id":	1000022,
+		"friend_name":	"kid",
+		"icon":	"https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1984486517,653178712&fm=26&gp=0.jpg"
+	},
+	"num":	1
+}
+  [Info][2021-03-01T 16:28:09Z][         main.c:  146]>>>> close by client
+  [Info][2021-03-01T 16:28:09Z][         chat.c:  463]>>>> redis_cmd:[del 100002]
+ [Debug][2021-03-01T 16:28:33Z][         main.c:   61]>>>> connfd 5
+ [Debug][2021-03-01T 16:28:33Z][         main.c:   71]>>>> child pid 7170
+
+ [Debug][2021-03-01T 16:28:33Z][         main.c:  135]>>>> source ip:192.168.1.6
+ [Debug][2021-03-01T 16:28:33Z][         main.c:  136]>>>> source port:46212
+ [Debug][2021-03-01T 16:28:36Z][         main.c:  159]>>>> recv data:{
+    "id": 100002,
+    "password": "Z001221z",
+    "type": 1,
+    "username": ""
+}
+
+  [Info][2021-03-01T 16:28:36Z][         chat.c:  517]>>>> type:1
+ [Debug][2021-03-01T 16:28:36Z][         chat.c:  400]>>>> id:100002
+ [Debug][2021-03-01T 16:28:36Z][         chat.c:  211]>>>> SELECT `pwd`,`user_name`,`icon` FROM `elec_dog`.`user_info` WHERE `user_id` = 100002
+ [Debug][2021-03-01T 16:28:36Z][         chat.c:  217]>>>> g not null 1 dbresult 0x263be80
+ [Debug][2021-03-01T 16:28:36Z][         chat.c:  232]>>>> userid:100002 pwd from mysql is:Z001221z
+ [Debug][2021-03-01T 16:28:36Z][         chat.c:  263]>>>> compare begin
+ [Debug][2021-03-01T 16:28:36Z][         chat.c:   78]>>>> pwd is ok
+ [Debug][2021-03-01T 16:28:36Z][         chat.c:   55]>>>> init redis conn success
+  [Info][2021-03-01T 16:28:36Z][         chat.c:  304]>>>> redis_cmd:[get 100002]
+ [Debug][2021-03-01T 16:28:36Z][         chat.c:  316]>>>> set 100002 5
+ [Debug][2021-03-01T 16:28:36Z][         chat.c:  344]>>>> {
+	"id":	100002,
+	"type":	2,
+	"username":	"内测1",
+	"icon":	"https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1984486517,653178712&fm=26&gp=0.jpg"
+}
+ [Debug][2021-03-01T 16:28:36Z][         chat.c:  346]>>>> [159]{
+	"id":	100002,
+	"type":	2,
+	"username":	"内测1",
+	"icon":	"https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1984486517,653178712&fm=26&gp=0.jpg"
+}
+ [Debug][2021-03-01T 16:28:36Z][         chat.c:  430]>>>> [len:159]s->c:{
+	"id":	100002,
+	"type":	2,
+	"username":	"内测1",
+	"icon":	"https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1984486517,653178712&fm=26&gp=0.jpg"
+}
+ [Debug][2021-03-01T 16:28:37Z][         main.c:  159]>>>> recv data:{
+    "id": 100002,
+    "type": 3
+}
+"
+  [Info][2021-03-01T 16:28:37Z][         chat.c:  517]>>>> type:3
+ [Debug][2021-03-01T 16:28:37Z][         chat.c:  115]>>>> SELECT `user_id`, `user_name`, `remark`, `icon` FROM `user_info`, `relation_friend`                                 WHERE `relation_friend`.`my_id` = 100002 AND `user_info`.`user_id` = `relation_friend`.`friend_id`
+ [Debug][2021-03-01T 16:28:37Z][         chat.c:  121]>>>> g not null 1 dbresult 0x263be80
+ [Debug][2021-03-01T 16:28:37Z][         chat.c:  487]>>>> {
+	"type":	5,
+	"0":	{
+		"friend_id":	1000022,
+		"friend_name":	"kid",
+		"icon":	"https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1984486517,653178712&fm=26&gp=0.jpg"
+	},
+	"num":	1
+}
+  [Info][2021-03-01T 16:28:48Z][         main.c:  146]>>>> close by client
+  [Info][2021-03-01T 16:28:48Z][         chat.c:  463]>>>> redis_cmd:[del 100002]

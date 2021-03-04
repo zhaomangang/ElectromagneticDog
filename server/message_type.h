@@ -23,10 +23,22 @@
 #define STR_ICON    "icon"
 #define STR_ERROR_CODE   "error_code"
 #define STR_ERROR_MSG   "error_msg"
+#define STR_FRIEND_ID "friend_id"
+#define STR_FRIEND_NAME "friend_name"
+#define STR_REMARK  "remark"
+#define STR_NUM "num"
+#define STR_RECV_ID "recv_id"
+#define STR_SEND_ID "send_id"
+#define STR_TIME "time"
+#define STR_MESSAGE_DATA "data"
 
 
 #define MESSAGE_LOGON_ERROR -1    //登录错误消息
 #define MESSAGE_LOGON 1 //登录请求
 #define MESSAGE_USERINFO   2   //用户信息
+#define MESSAGE_FRIEND_LIST 3   //好友列表请求
+#define MESSAGE_GROUP_LIST  4   //群组列表请求
+#define MESSAGE_FRIEND_LIST_RESPONSE 5  //好友列表响应
+#define MESSAGE_CHAT_DATE   6       //聊天消息
 
 #endif

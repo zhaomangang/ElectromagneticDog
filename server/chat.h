@@ -12,8 +12,11 @@
 
 #define LISTENQ 1024
 
+
+
 #define MAXLINE 4096
 
+#define TIME_MAX_STR    256
 #define RESOURCE_IP_MAX 32
 #define MAX_LEN_PWD 256
 
@@ -31,6 +34,9 @@
 #define MAX_LEN_SQL_STR 1024
 
 #define SQL_SELECT_USERINFO_BY_ID   "SELECT `pwd`,`user_name`,`icon` FROM `elec_dog`.`user_info` WHERE `user_id` = %d"
+
+#define SQL_SELECT_FRIEND_ALL "SELECT `user_id`, `user_name`, `remark`, `icon` FROM `user_info`, `relation_friend` \
+                                WHERE `relation_friend`.`my_id` = %d AND `user_info`.`user_id` = `relation_friend`.`friend_id`"
 
 typedef struct _CHAT_CONNECT_ {
     int connect_fd; //client connect socket fd

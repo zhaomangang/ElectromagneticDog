@@ -86,10 +86,10 @@ int main(int argc,char *argv[])
             // {
             //     write_log(LOG_ERROR,"parent close connect fd fail");
             // }
-           // if (wait(&status) != childpid)
-            //{
-               // write_log(LOG_ERROR,"error %d",status);
-            //}
+        //    if (wait(&status) != childpid)
+        //     {
+        //        write_log(LOG_ERROR,"error %d",status);
+        //     }
     
         }
     }
@@ -146,11 +146,10 @@ void connect_deal(int connect_fd)
             write_log(LOG_INFO,"close by client");
             if (-1 == close(connect_fd))
             {
-
                 //close connect_fd fail;
-                logout_deal(chat_conn);
                 write_log(LOG_ERROR,"close connect fail,child pid is %d",getpid());
             }
+            logout_deal(chat_conn);
             break;  //end child'
         }
         else if (n > 0)

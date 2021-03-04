@@ -58,3 +58,7 @@ systemctl start mysqld
 
 1 firewall-cmd --zone=public --add-port=3306/tcp --permanent
 2 firewall-cmd --reload
+
+
+
+#systemctl start httpd.service
