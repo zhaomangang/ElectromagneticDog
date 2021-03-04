@@ -20,6 +20,8 @@
 #define RESOURCE_IP_MAX 32
 #define MAX_LEN_PWD 256
 
+#define MAX_SORT_TEXT 255
+
 
 #define CONFIG_REDIS_HOST   "127.0.0.1"
 #define CONFIG_REDIS_PORT   6379
@@ -37,6 +39,8 @@
 
 #define SQL_SELECT_FRIEND_ALL "SELECT `user_id`, `user_name`, `remark`, `icon` FROM `user_info`, `relation_friend` \
                                 WHERE `relation_friend`.`my_id` = %d AND `user_info`.`user_id` = `relation_friend`.`friend_id`"
+
+#define SQL_INSERT_MUSIC_SORT   "INSERT INTO `music_sort_history`(`user_id`,`sort_text`,`time`) VALUES(%d,'%s',%ld)"
 
 typedef struct _CHAT_CONNECT_ {
     int connect_fd; //client connect socket fd

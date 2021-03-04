@@ -264,6 +264,9 @@ int verify_logon_info_from_mysql(int id,char* password,CHAT_CONNECT *chat_conn)
     return verify_pwd_by_decode(password,pwd);
 }
 
+
+
+
 /*
 *name:write_data_to_socket_fd(void* data,int data_len)
 *inputparam:data,data_len
@@ -626,6 +629,112 @@ int packet_deal_chat_message(char* message,cJSON *packet,CHAT_CONNECT *chat_conn
 }
 
 /*
+*name:save_sort_histort_to_mysql
+*inputparam:id,sort_text,time
+*return: -1:deal error 0:success 
+*describe:将搜索内容保存至mysql
+*/
+
+int save_sort_histort_to_mysql(int id, char* sort_text, unsigned int time_now)
+{
+    if (NULL == sort_text)
+    {
+        return -1;
+    }
+    char sql_str[MAX_LEN_SQL_STR]={0};
+    int ret = -1;
+    /*插入mysql*/
+    if (NULL == g_mysql_conn)//init
+    {
+        init_mysql_conn();
+        if(NULL == g_mysql_conn)
+        {
+            write_log(LOG_ERROR,"connect mysql error");
+            return -1;
+        }    
+    }
+    snprintf(sql_str, sizeof(sql_str),SQL_INSERT_MUSIC_SORT,id,sort_text,time_now);
+    write_log(LOG_DEBUG,"%s",sql_str);
+    if (NULL != g_mysql_conn)
+    {
+        //insert
+        ret = db_ExecSql(g_mysql_conn,sql_str);
+        write_log(LOG_DEBUG,"g not null %d",ret);
+        
+    }//mysqlconn
+    return ret;
+}
+
+/*
+*name:get_time_now
+*inputparam:void
+*return: -1:deal error other:time
+*describe:获取当前时间戳
+*/
+
+unsigned int get_time_now()
+{
+    struct timeval tv;
+    gettimeofday(&tv,NULL);
+    return tv.tv_sec;
+}
+
+/*
+*name:packet_deal_music_sort_message
+*inputparam:packet
+*return: -1:deal error 0:success
+*describe:处理音乐搜索数据
+*/
+int packet_deal_music_sort_message(cJSON *packet,CHAT_CONNECT *chat_conn)
+{
+    if (NULL == packet || NULL == chat_conn)
+    {
+        write_log(LOG_ERROR,"param is null");
+        return -1;
+    }
+    /*解析json*/
+    cJSON *node = NULL;
+    int id = 0;
+    char sort_text[MAX_SORT_TEXT] = {0};
+    node = cJSON_GetObjectItem(packet,STR_ID);
+    if (NULL == node)
+    {
+        //未发现id
+        write_log(LOG_WARNING,"not find id");
+        return -1;
+    }
+    else
+    {
+        if (cJSON_Number == node->type)
+        {
+            /*又可能是其它伪装客户端消息，因此应校验发送方id是否绑定当前套接字。后期再做处理*/
+            id = node->valueint;
+            write_log(LOG_DEBUG,"send_id = %d",id);
+        }
+    }
+    node = NULL;
+    node = cJSON_GetObjectItem(packet,STR_SORT_TEXT);
+    if (NULL == node)
+    {
+        //未发现sort_text
+        write_log(LOG_WARNING,"not find sort_text");
+        return -1;
+    }
+    else
+    {
+        if (cJSON_String == node->type)
+        {
+            /**/
+            strncpy(sort_text,node->valuestring,MAX_SORT_TEXT);
+            write_log(LOG_DEBUG,"SORT_TEXT is %s",sort_text);
+        }
+    }
+    return save_sort_histort_to_mysql(id,sort_text,get_time_now());
+}
+
+
+
+/*
 *name:chat_message_deal
 *inputparam:data,data_len
 *return: -1:error 0:success
@@ -664,6 +773,9 @@ int chat_message_deal(char* data,int data_len,CHAT_CONNECT *chat_conn)
     case MESSAGE_CHAT_DATE:     /*聊天消息*/
         packet_deal_chat_message(data,json,chat_conn);
         break;
+
+    case MESSAGE_MUSIC_SORT: /*音乐搜索*/
+        packet_deal_music_sort_message(json,chat_conn);
     default:
         break;
     }

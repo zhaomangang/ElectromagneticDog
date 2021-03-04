@@ -31,7 +31,7 @@
 #define STR_SEND_ID "send_id"
 #define STR_TIME "time"
 #define STR_MESSAGE_DATA "data"
-
+#define STR_SORT_TEXT "sort_text"
 
 #define MESSAGE_LOGON_ERROR -1    //登录错误消息
 #define MESSAGE_LOGON 1 //登录请求
@@ -40,5 +40,9 @@
 #define MESSAGE_GROUP_LIST  4   //群组列表请求
 #define MESSAGE_FRIEND_LIST_RESPONSE 5  //好友列表响应
 #define MESSAGE_CHAT_DATE   6       //聊天消息
+
+
+
+#define MESSAGE_MUSIC_SORT  10  //搜索音乐
 
 #endif
