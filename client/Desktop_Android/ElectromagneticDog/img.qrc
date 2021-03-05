@@ -5,5 +5,9 @@
         <file>resource/user.png</file>
         <file>resource/ed.png</file>
         <file>resource/bg.jpg</file>
+        <file>resource/music_play.png</file>
+        <file>resource/music_stop.png</file>
+        <file>resource/music_next.png</file>
+        <file>resource/music_suiji.png</file>
     </qresource>
 </RCC>

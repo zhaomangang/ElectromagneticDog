@@ -51,6 +51,7 @@ void ChatSocket::slotConnectToServer(QString ip, unsigned int port)
     {
         client_socket = new QTcpSocket();
     }
+    client_socket->abort();
     //主动和服务器建立连接
     client_socket->connectToHost(QHostAddress(ip),port);
 }

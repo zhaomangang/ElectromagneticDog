@@ -26,7 +26,7 @@ MainWidget::MainWidget(QWidget *parent) :
         qDebug()<<"login not null";
         login->show();  //显示登录界面
     }
-
+    music_mange = new Music(this);
     connect(login->getServerInfo(),SIGNAL(setInfoSuccess(QString,uint)),
            socket,SLOT(slotConnectToServer(QString,uint)));
     connect(socket,SIGNAL(logonSuccess(int,QString,QString)),this,SLOT(slotLogonSuccess(int,QString,QString)));
@@ -51,7 +51,7 @@ void MainWidget::slotLogonSuccess(int id, QString username, QString icon)
     ui->toolBox->widget(1)->setLayout(layout_group);
 
     QNetworkRequest request;
-    request.setUrl(QUrl("https://image.32yx.com/file/userfiles/images/2017072422285760475.jpg"));
+    request.setUrl(QUrl(icon));
     m_networkManager->get(request);
     /***demo****/
     FriendButton *fb = new FriendButton(1001,":/resource/login.png","mason");
@@ -82,4 +82,9 @@ void MainWidget::slotReplyFinished(QNetworkReply *reply)
 MainWidget::~MainWidget()
 {
     delete ui;
+}
+
+void MainWidget::on_pushButton_3_clicked()
+{
+    music_mange->sortMusic(ui->sort_text->text());
 }

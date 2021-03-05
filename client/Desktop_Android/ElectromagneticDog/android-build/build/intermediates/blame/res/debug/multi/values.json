@@ -20,30 +20,30 @@
                     "startLine": 5,
                     "startColumn": 4,
                     "startOffset": 114,
-                    "endLine": 17,
+                    "endLine": 20,
                     "endColumn": 12,
-                    "endOffset": 1009
+                    "endOffset": 1311
                 },
                 "from": {
                     "file": "G:\\ElectromagneticDog\\client\\Desktop_Android\\ElectromagneticDog\\android-build\\res\\values\\libs.xml",
                     "position": {
-                        "startLine": 22,
+                        "startLine": 23,
                         "startColumn": 4,
-                        "startOffset": 532,
-                        "endLine": 34,
+                        "startOffset": 559,
+                        "endLine": 38,
                         "endColumn": 12,
-                        "endOffset": 1429
+                        "endOffset": 1758
                     }
                 }
             },
             {
                 "to": {
-                    "startLine": 18,
+                    "startLine": 21,
                     "startColumn": 4,
-                    "startOffset": 1014,
-                    "endLine": 20,
+                    "startOffset": 1316,
+                    "endLine": 23,
                     "endColumn": 12,
-                    "endOffset": 1063
+                    "endOffset": 1365
                 },
                 "from": {
                     "file": "G:\\ElectromagneticDog\\client\\Desktop_Android\\ElectromagneticDog\\android-build\\res\\values\\libs.xml"
@@ -51,12 +51,12 @@
             },
             {
                 "to": {
-                    "startLine": 21,
+                    "startLine": 24,
                     "startColumn": 4,
-                    "startOffset": 1068,
-                    "endLine": 28,
+                    "startOffset": 1370,
+                    "endLine": 32,
                     "endColumn": 13,
-                    "endOffset": 1230
+                    "endOffset": 1559
                 },
                 "from": {
                     "file": "G:\\ElectromagneticDog\\client\\Desktop_Android\\ElectromagneticDog\\android-build\\res\\values\\libs.xml",
@@ -64,20 +64,20 @@
                         "startLine": 13,
                         "startColumn": 5,
                         "startOffset": 360,
-                        "endLine": 20,
+                        "endLine": 21,
                         "endColumn": 13,
-                        "endOffset": 524
+                        "endOffset": 551
                     }
                 }
             },
             {
                 "to": {
-                    "startLine": 29,
+                    "startLine": 33,
                     "startColumn": 4,
-                    "startOffset": 1235,
-                    "endLine": 31,
+                    "startOffset": 1564,
+                    "endLine": 35,
                     "endColumn": 12,
-                    "endOffset": 1345
+                    "endOffset": 1674
                 },
                 "from": {
                     "file": "G:\\ElectromagneticDog\\client\\Desktop_Android\\ElectromagneticDog\\android-build\\res\\values\\libs.xml"
@@ -85,11 +85,11 @@
             },
             {
                 "to": {
-                    "startLine": 32,
+                    "startLine": 36,
                     "startColumn": 4,
-                    "startOffset": 1350,
+                    "startOffset": 1679,
                     "endColumn": 107,
-                    "endOffset": 1453
+                    "endOffset": 1782
                 },
                 "from": {
                     "file": "F:\\Qt\\Qt5.9.0\\5.9\\android_armv7\\src\\android\\java\\res\\values\\strings.xml"
@@ -97,11 +97,11 @@
             },
             {
                 "to": {
-                    "startLine": 33,
+                    "startLine": 37,
                     "startColumn": 4,
-                    "startOffset": 1458,
+                    "startOffset": 1787,
                     "endColumn": 121,
-                    "endOffset": 1575
+                    "endOffset": 1904
                 },
                 "from": {
                     "file": "F:\\Qt\\Qt5.9.0\\5.9\\android_armv7\\src\\android\\java\\res\\values\\strings.xml"
@@ -109,11 +109,11 @@
             },
             {
                 "to": {
-                    "startLine": 34,
+                    "startLine": 38,
                     "startColumn": 4,
-                    "startOffset": 1580,
+                    "startOffset": 1909,
                     "endColumn": 111,
-                    "endOffset": 1687
+                    "endOffset": 2016
                 },
                 "from": {
                     "file": "F:\\Qt\\Qt5.9.0\\5.9\\android_armv7\\src\\android\\java\\res\\values\\strings.xml"
@@ -121,11 +121,11 @@
             },
             {
                 "to": {
-                    "startLine": 35,
+                    "startLine": 39,
                     "startColumn": 4,
-                    "startOffset": 1692,
+                    "startOffset": 2021,
                     "endColumn": 84,
-                    "endOffset": 1772
+                    "endOffset": 2101
                 },
                 "from": {
                     "file": "F:\\Qt\\Qt5.9.0\\5.9\\android_armv7\\src\\android\\java\\res\\values\\strings.xml"

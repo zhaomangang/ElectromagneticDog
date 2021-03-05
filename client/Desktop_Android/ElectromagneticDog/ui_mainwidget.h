@@ -13,6 +13,7 @@
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
+#include <QtWidgets/QComboBox>
 #include <QtWidgets/QFrame>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QHBoxLayout>
@@ -50,25 +51,28 @@ public:
     QWidget *tab_music;
     QVBoxLayout *verticalLayout_3;
     QFrame *frame_2;
-    QHBoxLayout *horizontalLayout_3;
-    QLineEdit *lineEdit;
+    QGridLayout *gridLayout_4;
+    QLineEdit *sort_text;
     QPushButton *pushButton_3;
-    QTableView *tableView;
+    QComboBox *comboBox;
+    QLabel *label_2;
+    QTableView *music_list;
     QFrame *frame;
-    QHBoxLayout *horizontalLayout_2;
+    QGridLayout *gridLayout_3;
+    QPushButton *music_xunhuan;
     QLabel *label;
     QWidget *widget;
     QGridLayout *gridLayout_2;
     QLabel *label_5;
     QLabel *label_6;
-    QLabel *label_2;
-    QLabel *label_4;
+    QPushButton *music_play;
+    QPushButton *music_next;
 
     void setupUi(QWidget *MainWidget)
     {
         if (MainWidget->objectName().isEmpty())
             MainWidget->setObjectName(QStringLiteral("MainWidget"));
-        MainWidget->resize(310, 701);
+        MainWidget->resize(333, 701);
         verticalLayout = new QVBoxLayout(MainWidget);
         verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
         widget_userinfo = new QWidget(MainWidget);
@@ -113,11 +117,11 @@ public:
         toolBox->setObjectName(QStringLiteral("toolBox"));
         page_friend = new QWidget();
         page_friend->setObjectName(QStringLiteral("page_friend"));
-        page_friend->setGeometry(QRect(0, 0, 260, 362));
+        page_friend->setGeometry(QRect(0, 0, 283, 362));
         toolBox->addItem(page_friend, QString::fromUtf8("\345\245\275\345\217\213\345\210\227\350\241\250"));
         page_group = new QWidget();
         page_group->setObjectName(QStringLiteral("page_group"));
-        page_group->setGeometry(QRect(0, 0, 260, 362));
+        page_group->setGeometry(QRect(0, 0, 100, 30));
         toolBox->addItem(page_group, QString::fromUtf8("\347\276\244\347\273\204\345\210\227\350\241\250"));
 
         verticalLayout_2->addWidget(toolBox);
@@ -150,36 +154,59 @@ public:
         frame_2->setObjectName(QStringLiteral("frame_2"));
         frame_2->setFrameShape(QFrame::StyledPanel);
         frame_2->setFrameShadow(QFrame::Raised);
-        horizontalLayout_3 = new QHBoxLayout(frame_2);
-        horizontalLayout_3->setObjectName(QStringLiteral("horizontalLayout_3"));
-        lineEdit = new QLineEdit(frame_2);
-        lineEdit->setObjectName(QStringLiteral("lineEdit"));
+        gridLayout_4 = new QGridLayout(frame_2);
+        gridLayout_4->setObjectName(QStringLiteral("gridLayout_4"));
+        sort_text = new QLineEdit(frame_2);
+        sort_text->setObjectName(QStringLiteral("sort_text"));
 
-        horizontalLayout_3->addWidget(lineEdit);
+        gridLayout_4->addWidget(sort_text, 1, 0, 1, 1);
 
         pushButton_3 = new QPushButton(frame_2);
         pushButton_3->setObjectName(QStringLiteral("pushButton_3"));
+        QSizePolicy sizePolicy1(QSizePolicy::Maximum, QSizePolicy::Fixed);
+        sizePolicy1.setHorizontalStretch(0);
+        sizePolicy1.setVerticalStretch(0);
+        sizePolicy1.setHeightForWidth(pushButton_3->sizePolicy().hasHeightForWidth());
+        pushButton_3->setSizePolicy(sizePolicy1);
 
-        horizontalLayout_3->addWidget(pushButton_3);
+        gridLayout_4->addWidget(pushButton_3, 1, 2, 1, 1);
+
+        comboBox = new QComboBox(frame_2);
+        comboBox->setObjectName(QStringLiteral("comboBox"));
+
+        gridLayout_4->addWidget(comboBox, 0, 2, 1, 1);
+
+        label_2 = new QLabel(frame_2);
+        label_2->setObjectName(QStringLiteral("label_2"));
+
+        gridLayout_4->addWidget(label_2, 0, 0, 1, 1);
 
 
         verticalLayout_3->addWidget(frame_2);
 
-        tableView = new QTableView(tab_music);
-        tableView->setObjectName(QStringLiteral("tableView"));
+        music_list = new QTableView(tab_music);
+        music_list->setObjectName(QStringLiteral("music_list"));
 
-        verticalLayout_3->addWidget(tableView);
+        verticalLayout_3->addWidget(music_list);
 
         frame = new QFrame(tab_music);
         frame->setObjectName(QStringLiteral("frame"));
         frame->setFrameShape(QFrame::StyledPanel);
         frame->setFrameShadow(QFrame::Raised);
-        horizontalLayout_2 = new QHBoxLayout(frame);
-        horizontalLayout_2->setObjectName(QStringLiteral("horizontalLayout_2"));
+        gridLayout_3 = new QGridLayout(frame);
+        gridLayout_3->setObjectName(QStringLiteral("gridLayout_3"));
+        music_xunhuan = new QPushButton(frame);
+        music_xunhuan->setObjectName(QStringLiteral("music_xunhuan"));
+        QIcon icon;
+        icon.addFile(QStringLiteral(":/resource/music_suiji.png"), QSize(), QIcon::Normal, QIcon::Off);
+        music_xunhuan->setIcon(icon);
+
+        gridLayout_3->addWidget(music_xunhuan, 2, 3, 1, 1);
+
         label = new QLabel(frame);
         label->setObjectName(QStringLiteral("label"));
 
-        horizontalLayout_2->addWidget(label);
+        gridLayout_3->addWidget(label, 0, 0, 4, 1);
 
         widget = new QWidget(frame);
         widget->setObjectName(QStringLiteral("widget"));
@@ -196,17 +223,24 @@ public:
         gridLayout_2->addWidget(label_6, 1, 1, 1, 1);
 
 
-        horizontalLayout_2->addWidget(widget);
+        gridLayout_3->addWidget(widget, 0, 1, 4, 1);
 
-        label_2 = new QLabel(frame);
-        label_2->setObjectName(QStringLiteral("label_2"));
+        music_play = new QPushButton(frame);
+        music_play->setObjectName(QStringLiteral("music_play"));
+        QIcon icon1;
+        icon1.addFile(QStringLiteral(":/resource/music_play.png"), QSize(), QIcon::Normal, QIcon::Off);
+        music_play->setIcon(icon1);
 
-        horizontalLayout_2->addWidget(label_2);
+        gridLayout_3->addWidget(music_play, 0, 3, 1, 1);
 
-        label_4 = new QLabel(frame);
-        label_4->setObjectName(QStringLiteral("label_4"));
+        music_next = new QPushButton(frame);
+        music_next->setObjectName(QStringLiteral("music_next"));
+        QIcon icon2;
+        icon2.addFile(QStringLiteral(":/resource/music_next.png"), QSize(), QIcon::Normal, QIcon::Off);
+        music_next->setIcon(icon2);
+        music_next->setIconSize(QSize(16, 16));
 
-        horizontalLayout_2->addWidget(label_4);
+        gridLayout_3->addWidget(music_next, 1, 3, 1, 1);
 
 
         verticalLayout_3->addWidget(frame);
@@ -218,7 +252,7 @@ public:
 
         retranslateUi(MainWidget);
 
-        tabWidget->setCurrentIndex(0);
+        tabWidget->setCurrentIndex(1);
         toolBox->setCurrentIndex(0);
 
 
@@ -236,12 +270,19 @@ public:
         pushButton->setText(QApplication::translate("MainWidget", "PushButton", Q_NULLPTR));
         pushButton_2->setText(QApplication::translate("MainWidget", "PushButton", Q_NULLPTR));
         tabWidget->setTabText(tabWidget->indexOf(tab_chat), QApplication::translate("MainWidget", "\350\201\212\345\244\251", Q_NULLPTR));
-        pushButton_3->setText(QApplication::translate("MainWidget", "PushButton", Q_NULLPTR));
+        sort_text->setText(QString());
+        pushButton_3->setText(QApplication::translate("MainWidget", "\346\220\234\347\264\242", Q_NULLPTR));
+        comboBox->clear();
+        comboBox->insertItems(0, QStringList()
+         << QApplication::translate("MainWidget", "kuwomusic", Q_NULLPTR)
+        );
+        label_2->setText(QApplication::translate("MainWidget", "\346\220\234\347\264\242\346\272\220\357\274\232", Q_NULLPTR));
+        music_xunhuan->setText(QApplication::translate("MainWidget", "\351\232\217\346\234\272\346\222\255\346\224\276", Q_NULLPTR));
         label->setText(QApplication::translate("MainWidget", "TextLabel", Q_NULLPTR));
         label_5->setText(QApplication::translate("MainWidget", "TextLabel", Q_NULLPTR));
         label_6->setText(QApplication::translate("MainWidget", "TextLabel", Q_NULLPTR));
-        label_2->setText(QApplication::translate("MainWidget", "TextLabel", Q_NULLPTR));
-        label_4->setText(QApplication::translate("MainWidget", "TextLabel", Q_NULLPTR));
+        music_play->setText(QApplication::translate("MainWidget", "\346\222\255\346\224\276", Q_NULLPTR));
+        music_next->setText(QApplication::translate("MainWidget", "\344\270\213\344\270\200\346\233\262", Q_NULLPTR));
         tabWidget->setTabText(tabWidget->indexOf(tab_music), QApplication::translate("MainWidget", "\351\237\263\344\271\220", Q_NULLPTR));
     } // retranslateUi
 
