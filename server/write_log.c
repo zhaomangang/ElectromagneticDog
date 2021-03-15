@@ -34,7 +34,7 @@ void debug_level_set(debug_level_em level)
 int getTimeString(char* timeStr){
     time_t times = time(NULL);
     struct tm* utcTime = gmtime(&times);
-    int timeStrLen = sprintf(timeStr, "%04d-%02d-%02dT %02d:%02d:%02dZ", utcTime->tm_year+1900, utcTime->tm_mon+1, utcTime->tm_mday, utcTime->tm_hour, utcTime->tm_min, utcTime->tm_sec);
+    int timeStrLen = sprintf(timeStr, "%04d-%02d-%02dT %02d:%02d:%02dZ", utcTime->tm_year+1900, utcTime->tm_mon+1, utcTime->tm_mday, 8 + utcTime->tm_hour, utcTime->tm_min, utcTime->tm_sec);
     return timeStrLen;
 }
 

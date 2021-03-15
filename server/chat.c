@@ -13,8 +13,6 @@
 #include <unistd.h>
 #include <hiredis/hiredis.h>
 
-redisContext *g_redis_conn = NULL;  //全局redis连接
-void *g_mysql_conn = NULL;  //全局mysql连接
 
 /*******************************************************************************
 *  func desc:   init_mysql_conn
@@ -22,11 +20,11 @@ void *g_mysql_conn = NULL;  //全局mysql连接
 *  out   param: g_mysql_conn
 *  retun value: void
 ********************************************************************************/
-void init_mysql_conn(void)
+void init_mysql_conn(void** g_mysql_conn)
 {   
-    if (NULL == g_mysql_conn)
+    if (NULL == *g_mysql_conn)
     {
-        g_mysql_conn = InitDbCon2(MYSQL_LOCAL, MYSQL_USER, MYSQL_PASSWD, 
+        *g_mysql_conn = InitDbCon2(MYSQL_LOCAL, MYSQL_USER, MYSQL_PASSWD, 
             MYSQL_PORT, MYSQL_DATABASE);    
     }
     return ;
@@ -41,12 +39,12 @@ void init_mysql_conn(void)
 *return: -1:faild other:success
 */
 
-int init_redis_connect()
+int init_redis_connect(redisContext **g_redis_conn)
 {
-    g_redis_conn = redisConnect(CONFIG_REDIS_HOST, CONFIG_REDIS_PORT);
-    if (g_redis_conn == NULL || g_redis_conn->err) {
-        if (g_redis_conn) {
-            write_log(LOG_ERROR, "%s", g_redis_conn->errstr);
+    (*g_redis_conn) = redisConnect(CONFIG_REDIS_HOST, CONFIG_REDIS_PORT);
+    if (*g_redis_conn == NULL || (*g_redis_conn)->err) {
+        if (*g_redis_conn) {
+            write_log(LOG_ERROR, "%s", (*g_redis_conn)->errstr);
         } else {
             write_log(LOG_ERROR, "Can't allocate redis context");
         }
@@ -102,15 +100,13 @@ int get_friend_list_from_mysql(int id, char* packet)
     friend_list = cJSON_CreateObject();
     cJSON_AddNumberToObject(friend_list,STR_TYPE,MESSAGE_FRIEND_LIST_RESPONSE);
     /*查询pwd*/
-    if (NULL == g_mysql_conn)//init
+    void *g_mysql_conn = NULL;
+    init_mysql_conn(&g_mysql_conn);
+    if(NULL == g_mysql_conn)
     {
-        init_mysql_conn();
-        if(NULL == g_mysql_conn)
-        {
-            write_log(LOG_ERROR,"connect mysql error");
-            return -1;
-        }    
-    }
+        write_log(LOG_ERROR,"connect mysql error");
+        return -1;
+    }    
     snprintf(sql_str, sizeof(sql_str),SQL_SELECT_FRIEND_ALL,id);
     write_log(LOG_DEBUG,"%s",sql_str);
     if (NULL != g_mysql_conn)
@@ -127,6 +123,7 @@ int get_friend_list_from_mysql(int id, char* packet)
                 dbResult = NULL;
             }
             write_log(LOG_ERROR,"not have pwd by id:%d",id);
+            CloseDbCon(g_mysql_conn);
             return -1;
         }
         if (NULL != dbResult && dbResult->nrow > 0)
@@ -167,6 +164,7 @@ int get_friend_list_from_mysql(int id, char* packet)
         else
         {
             write_log(LOG_ERROR,"not have result by id:%d",id);
+            CloseDbCon(g_mysql_conn);
             return -1;
         }
         if (dbResult)
@@ -174,6 +172,7 @@ int get_friend_list_from_mysql(int id, char* packet)
             FreeDbResult(dbResult);
             dbResult = NULL; 
         }
+        CloseDbCon(g_mysql_conn);
     }//mysqlconn
 
 }
@@ -198,14 +197,12 @@ int verify_logon_info_from_mysql(int id,char* password,CHAT_CONNECT *chat_conn)
     char pwd[MAX_LEN_PWD] = {0};
 
     /*查询pwd*/
-    if (NULL == g_mysql_conn)//init
+    void *g_mysql_conn = NULL;
+    init_mysql_conn(&g_mysql_conn);
+    if(NULL == g_mysql_conn)
     {
-        init_mysql_conn();
-        if(NULL == g_mysql_conn)
-        {
-            write_log(LOG_ERROR,"connect mysql error");
-            return -1;
-        }    
+        write_log(LOG_ERROR,"connect mysql error");
+        return -1;
     }
     snprintf(sql_str, sizeof(sql_str),SQL_SELECT_USERINFO_BY_ID,id);
     write_log(LOG_DEBUG,"%s",sql_str);
@@ -223,6 +220,7 @@ int verify_logon_info_from_mysql(int id,char* password,CHAT_CONNECT *chat_conn)
                 dbResult = NULL;
             }
             write_log(LOG_ERROR,"not have pwd by id:%d",id);
+            CloseDbCon(g_mysql_conn);
             return -1;
         }
         if (NULL != dbResult && dbResult->nrow > 0)
@@ -235,6 +233,7 @@ int verify_logon_info_from_mysql(int id,char* password,CHAT_CONNECT *chat_conn)
             else
             {
                 write_log(LOG_ERROR,"not have result by id:%d",id);
+                CloseDbCon(g_mysql_conn);
                 return -1;
             }
             if (NULL != dbResult->rows[0][1])
@@ -251,6 +250,7 @@ int verify_logon_info_from_mysql(int id,char* password,CHAT_CONNECT *chat_conn)
         else
         {
             write_log(LOG_ERROR,"not have result by id:%d",id);
+            CloseDbCon(g_mysql_conn);
             return -1;
         }
         if (dbResult)
@@ -261,6 +261,7 @@ int verify_logon_info_from_mysql(int id,char* password,CHAT_CONNECT *chat_conn)
     }//mysqlconn
     /*比较pwd*/
     write_log(LOG_DEBUG,"compare begin");
+    CloseDbCon(g_mysql_conn);
     return verify_pwd_by_decode(password,pwd);
 }
 
@@ -293,15 +294,13 @@ int write_data_to_socket_fd(int fd,void* data,int data_len)
 int save_user_fd_relation_to_redis(int fd,int id)
 {
     /*检测当前账号是否已登录*/
-    if (NULL == g_redis_conn)
+    redisContext *g_redis_conn = NULL;
+    //初始化redis连接
+    if (-1 == init_redis_connect(&g_redis_conn))
     {
-        //未初始化redis连接
-        if (-1 == init_redis_connect())
-        {
-            //初始化失败，直接返回错误，因为无法断定当前redis情况
-            write_log(LOG_ERROR,"redis maybe is die");
-            return -1;
-        }
+        //初始化失败，直接返回错误，因为无法断定当前redis情况
+        write_log(LOG_ERROR,"redis maybe is die");
+        return -1;
     }
     redisReply *reply = redisCommand(g_redis_conn, "get %d",id);
     write_log(LOG_INFO,"redis_cmd:[get %d]",id);
@@ -310,6 +309,8 @@ int save_user_fd_relation_to_redis(int fd,int id)
         //查到该key，证明该id当前已登录
         write_log(LOG_DEBUG,"the id %d is loging [%d]", id, reply->type);
         freeReplyObject(reply);
+        redisFree(g_redis_conn);
+        g_redis_conn = NULL;
         return -1;
     }
     else
@@ -319,6 +320,8 @@ int save_user_fd_relation_to_redis(int fd,int id)
         write_log(LOG_DEBUG,"set %d %d", id, fd);
         freeReplyObject(reply);
     }
+    redisFree(g_redis_conn);
+    g_redis_conn = NULL;
     return 0;
 }
 
@@ -445,15 +448,13 @@ int packet_deal_logon(cJSON *packet,CHAT_CONNECT *chat_conn)
 int isOnLine(int id)
 {
     int fd = 0;
-    if (NULL == g_redis_conn)
+    redisContext *g_redis_conn = NULL;
+    //初始化redis连接
+    if (-1 == init_redis_connect(&g_redis_conn))
     {
-        //未初始化redis连接
-        if (-1 == init_redis_connect())
-        {
-            //初始化失败，直接返回错误，因为无法断定当前redis情况
-            write_log(LOG_ERROR,"redis maybe is die");
-            return fd;
-        }
+        //初始化失败，直接返回错误，因为无法断定当前redis情况
+        write_log(LOG_ERROR,"redis maybe is die");
+        return -1;
     }
     redisReply *reply = redisCommand(g_redis_conn, "get %d",id);
     write_log(LOG_INFO,"redis_cmd:[get %d]",id);
@@ -469,7 +470,7 @@ int isOnLine(int id)
     }
     //释放redis资源
     freeReplyObject(reply);
-   // redisFree(g_redis_conn);
+    redisFree(g_redis_conn);
     
     return fd;
 }
@@ -488,17 +489,19 @@ void logout_deal(CHAT_CONNECT *chat_conn)
         write_log(LOG_WARNING,"chat_conn is null");
         return;
     }
+    if (0 == chat_conn->id)
+    {
+        return;
+    }
     /*客户端登出处理*/
     //删除redis中对应的key
-    if (NULL == g_redis_conn)
+    redisContext *g_redis_conn = NULL;
+    //初始化redis连接
+    if (-1 == init_redis_connect(&g_redis_conn))
     {
-        //未初始化redis连接
-        if (-1 == init_redis_connect())
-        {
-            //初始化失败，直接返回错误，因为无法断定当前redis情况
-            write_log(LOG_ERROR,"redis maybe is die");
-            return;
-        }
+        //初始化失败，直接返回错误，因为无法断定当前redis情况
+        write_log(LOG_ERROR,"redis maybe is die");
+        return -1;
     }
     redisReply *reply = redisCommand(g_redis_conn, "del %d",chat_conn->id);
     write_log(LOG_INFO,"redis_cmd:[del %d]",chat_conn->id);
@@ -644,14 +647,12 @@ int save_sort_histort_to_mysql(int id, char* sort_text, unsigned int time_now)
     char sql_str[MAX_LEN_SQL_STR]={0};
     int ret = -1;
     /*插入mysql*/
-    if (NULL == g_mysql_conn)//init
+    void *g_mysql_conn = NULL;
+    init_mysql_conn(&g_mysql_conn);
+    if(NULL == g_mysql_conn)
     {
-        init_mysql_conn();
-        if(NULL == g_mysql_conn)
-        {
-            write_log(LOG_ERROR,"connect mysql error");
-            return -1;
-        }    
+        write_log(LOG_ERROR,"connect mysql error");
+        return -1;
     }
     snprintf(sql_str, sizeof(sql_str),SQL_INSERT_MUSIC_SORT,id,sort_text,time_now);
     write_log(LOG_DEBUG,"%s",sql_str);
@@ -662,6 +663,7 @@ int save_sort_histort_to_mysql(int id, char* sort_text, unsigned int time_now)
         write_log(LOG_DEBUG,"g not null %d",ret);
         
     }//mysqlconn
+    CloseDbCon(g_mysql_conn);
     return ret;
 }
 

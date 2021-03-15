@@ -33,6 +33,11 @@
 #define STR_MESSAGE_DATA "data"
 #define STR_SORT_TEXT "sort_text"
 
+#define STR_REAL_NAME "realname"
+#define STR_ADDRESS "address"
+#define STR_MAIL "mail"
+#define STR_VERIFY_CODE "verify_code"
+
 #define MESSAGE_LOGON_ERROR -1    //登录错误消息
 #define MESSAGE_LOGON 1 //登录请求
 #define MESSAGE_USERINFO   2   //用户信息
@@ -41,6 +46,9 @@
 #define MESSAGE_FRIEND_LIST_RESPONSE 5  //好友列表响应
 #define MESSAGE_CHAT_DATE   6       //聊天消息
 
+#define MESSAGE_REGISTER_REQ    7   //注册请求
+#define MESSAGE_VERIFY_REQ  8   //验证码请求
+#define MESSAGE_REGISTER_RPT    9   //注册结果
 
 
 #define MESSAGE_MUSIC_SORT  10  //搜索音乐
