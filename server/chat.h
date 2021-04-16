@@ -18,9 +18,9 @@
 
 #define TIME_MAX_STR    256
 #define RESOURCE_IP_MAX 32
-#define MAX_LEN_PWD 256
 
 #define MAX_SORT_TEXT 255
+
 
 
 #define CONFIG_REDIS_HOST   "127.0.0.1"
@@ -42,6 +42,15 @@
 
 #define SQL_INSERT_MUSIC_SORT   "INSERT INTO `music_sort_history`(`user_id`,`sort_text`,`time`) VALUES(%d,'%s',%ld)"
 
+#define SQL_SELECT_MAX_ID "SELECT MAX(user_id) FROM `user_info`"
+
+#define SQL_INSERT_USER_INFO "INSERT INTO `user_info`(`user_id`,`user_name`,`real_name`,`address`,`pwd`,`email`,`icon`,`register_time`) \
+                                                VALUES(%d,'%s','%s','%s','%s','%s','%s',%d)"
+
+#define EMAIL_SEND_CMD "python3 /opt/script/email_send.py %s 注册验证码:%d"
+
+#define EMAIL_SEND_UID "python3 /opt/script/email_send.py %s id:%d"
+
 typedef struct _CHAT_CONNECT_ {
     int connect_fd; //client connect socket fd
     unsigned int source_port;   //源端口号
@@ -49,6 +58,7 @@ typedef struct _CHAT_CONNECT_ {
     int id; //user id
     char user_name[MAX_LEN_USERNAME];   //用户名
     char icon[MAX_LEN_ICON];    //icon
+    int verify_code;    //验证码
     //...
 }CHAT_CONNECT;
 

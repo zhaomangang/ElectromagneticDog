@@ -1444,6 +1444,7 @@ static cJSON *generate_merge_patch(cJSON * const from, cJSON * const to, const c
             cJSON_AddItemToObject(patch, to_child->string, cJSON_Duplicate(to_child, 1));
 
             to_child = to_child->next;
+            
         }
         else
         {

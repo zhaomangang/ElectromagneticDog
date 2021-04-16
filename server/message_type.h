@@ -13,8 +13,8 @@
 #define MAX_LEN_PASSWORD 256
 #define MAX_LEN_USERNAME 128
 #define MAX_LEN_ICON     256
-
-
+#define MAX_LEN_ADDRESS  128
+#define MAX_LEN_MAIL     128
 
 #define STR_TYPE "type"
 #define STR_ID  "id"
@@ -37,6 +37,7 @@
 #define STR_ADDRESS "address"
 #define STR_MAIL "mail"
 #define STR_VERIFY_CODE "verify_code"
+#define STR_MSG "msg"
 
 #define MESSAGE_LOGON_ERROR -1    //登录错误消息
 #define MESSAGE_LOGON 1 //登录请求

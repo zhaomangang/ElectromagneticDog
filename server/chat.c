@@ -14,6 +14,22 @@
 #include <hiredis/hiredis.h>
 
 
+
+/*
+*name:get_time_now
+*inputparam:void
+*return: -1:deal error other:time
+*describe:获取当前时间戳
+*/
+
+unsigned int get_time_now()
+{
+    struct timeval tv;
+    gettimeofday(&tv,NULL);
+    return tv.tv_sec;
+}
+
+
 /*******************************************************************************
 *  func desc:   init_mysql_conn
 *  input param: void
@@ -21,7 +37,11 @@
 *  retun value: void
 ********************************************************************************/
 void init_mysql_conn(void** g_mysql_conn)
-{   
+{
+    if (NULL == g_mysql_conn)
+    {
+        return;
+    }   
     if (NULL == *g_mysql_conn)
     {
         *g_mysql_conn = InitDbCon2(MYSQL_LOCAL, MYSQL_USER, MYSQL_PASSWD, 
@@ -95,7 +115,7 @@ int get_friend_list_from_mysql(int id, char* packet)
     char sql_str[MAX_LEN_SQL_STR]={0};
     struct DbResult *dbResult = NULL;
     int ret = 0;
-    char pwd[MAX_LEN_PWD] = {0};
+    char pwd[MAX_LEN_PASSWORD] = {0};
     cJSON* friend_list = NULL;
     friend_list = cJSON_CreateObject();
     cJSON_AddNumberToObject(friend_list,STR_TYPE,MESSAGE_FRIEND_LIST_RESPONSE);
@@ -124,6 +144,7 @@ int get_friend_list_from_mysql(int id, char* packet)
             }
             write_log(LOG_ERROR,"not have pwd by id:%d",id);
             CloseDbCon(g_mysql_conn);
+            g_mysql_conn = NULL;
             return -1;
         }
         if (NULL != dbResult && dbResult->nrow > 0)
@@ -165,6 +186,7 @@ int get_friend_list_from_mysql(int id, char* packet)
         {
             write_log(LOG_ERROR,"not have result by id:%d",id);
             CloseDbCon(g_mysql_conn);
+            g_mysql_conn = NULL;
             return -1;
         }
         if (dbResult)
@@ -173,6 +195,7 @@ int get_friend_list_from_mysql(int id, char* packet)
             dbResult = NULL; 
         }
         CloseDbCon(g_mysql_conn);
+        g_mysql_conn = NULL;
     }//mysqlconn
 
 }
@@ -194,7 +217,7 @@ int verify_logon_info_from_mysql(int id,char* password,CHAT_CONNECT *chat_conn)
     char sql_str[MAX_LEN_SQL_STR]={0};
     struct DbResult *dbResult = NULL;
     int ret = 0;
-    char pwd[MAX_LEN_PWD] = {0};
+    char pwd[MAX_LEN_PASSWORD] = {0};
 
     /*查询pwd*/
     void *g_mysql_conn = NULL;
@@ -221,6 +244,7 @@ int verify_logon_info_from_mysql(int id,char* password,CHAT_CONNECT *chat_conn)
             }
             write_log(LOG_ERROR,"not have pwd by id:%d",id);
             CloseDbCon(g_mysql_conn);
+            g_mysql_conn = NULL;
             return -1;
         }
         if (NULL != dbResult && dbResult->nrow > 0)
@@ -228,12 +252,13 @@ int verify_logon_info_from_mysql(int id,char* password,CHAT_CONNECT *chat_conn)
             if (NULL != dbResult->rows[0][0])
             {
                 write_log(LOG_DEBUG,"userid:%d pwd from mysql is:%s",id,dbResult->rows[0][0]);
-                strncpy(pwd,dbResult->rows[0][0],MAX_LEN_PWD);
+                strncpy(pwd,dbResult->rows[0][0],MAX_LEN_PASSWORD);
             } 
             else
             {
                 write_log(LOG_ERROR,"not have result by id:%d",id);
                 CloseDbCon(g_mysql_conn);
+                g_mysql_conn = NULL;
                 return -1;
             }
             if (NULL != dbResult->rows[0][1])
@@ -251,6 +276,7 @@ int verify_logon_info_from_mysql(int id,char* password,CHAT_CONNECT *chat_conn)
         {
             write_log(LOG_ERROR,"not have result by id:%d",id);
             CloseDbCon(g_mysql_conn);
+            g_mysql_conn = NULL;
             return -1;
         }
         if (dbResult)
@@ -262,6 +288,7 @@ int verify_logon_info_from_mysql(int id,char* password,CHAT_CONNECT *chat_conn)
     /*比较pwd*/
     write_log(LOG_DEBUG,"compare begin");
     CloseDbCon(g_mysql_conn);
+    g_mysql_conn = NULL;
     return verify_pwd_by_decode(password,pwd);
 }
 
@@ -352,6 +379,39 @@ int construct_userinfo_packet(CHAT_CONNECT* chat_conn,char* packet)
     write_log(LOG_DEBUG,"[%d]%s",strlen(packet),packet);
     return 0;
 }
+
+
+/*
+*name:construct_register_response(char* packet)
+*inputparam:id
+*outputparam:username,icon
+*return: -1:deal error other:send bit nums 
+*describe:write to fd,if write success return bit nums.else return -1
+
+char icon[MAX_LEN_ICON] = {0};
+    char user_name[MAX_LEN_USERNAME] = {0};
+    char password[MAX_LEN_PASSWORD] = {0};
+    char real_name[MAX_LEN_USERNAME] = {0};
+    char address[MAX_LEN_ADDRESS] = {0};
+    char mail[MAX_LEN_MAIL] = {0};
+*/
+int construct_register_response(char* packet,int u_id, char* msg)
+{
+    cJSON* root = NULL;
+    if (NULL == packet)
+    {
+        return -1;
+    }
+    root = cJSON_CreateObject();
+    cJSON_AddNumberToObject(root,STR_TYPE,MESSAGE_REGISTER_RPT);
+    cJSON_AddNumberToObject(root,STR_ID,u_id);
+    cJSON_AddStringToObject(root,STR_MSG,msg);    //add packet type to json
+    //write_log(LOG_DEBUG,"%s",cJSON_Print(root)); 
+    strncpy(packet,cJSON_Print(root),MAXLINE); //get string from json
+    write_log(LOG_DEBUG,"[%d]%s",strlen(packet),packet);
+    return 0;
+}
+
 
 /*
 *name:construct_logon_error_packet(char* packet)
@@ -632,6 +692,314 @@ int packet_deal_chat_message(char* message,cJSON *packet,CHAT_CONNECT *chat_conn
 }
 
 /*
+*name:create_verify_code
+*inputparam:packet
+*return: -1:deal error 0:success 1:password/id error 
+*describe:处理转发聊天消息
+*/
+int create_verify_code()
+{
+    return get_time_now() % 1000;
+}
+
+
+/*
+*name:generate_user_id
+*inputparam:packet
+*return: -1:deal error 0:success 1:password/id error 
+*describe:处理转发聊天消息
+*/
+int generate_user_id()
+{
+    char sql_str[MAX_LEN_SQL_STR]={0};
+    struct DbResult *dbResult = NULL;
+    int ret = 0;
+    int uid = -1;
+    /*查询max_id*/
+    void *g_mysql_conn = NULL;
+    init_mysql_conn(&g_mysql_conn);
+    if(NULL == g_mysql_conn)
+    {
+        write_log(LOG_ERROR,"connect mysql error");
+        return -1;
+    }
+    snprintf(sql_str, sizeof(sql_str),SQL_SELECT_MAX_ID);
+    write_log(LOG_DEBUG,"%s",sql_str);
+    if (NULL != g_mysql_conn)
+    {
+        //查pwd
+        dbResult = CreateDbResult();
+        ret = db_QuerySql(g_mysql_conn, dbResult, sql_str);//querys
+        write_log(LOG_DEBUG,"g not null %d dbresult %p",ret,dbResult);
+        if (1 != ret)
+        {
+            if (dbResult)
+            {
+                FreeDbResult(dbResult);
+                dbResult = NULL;
+            }
+            write_log(LOG_ERROR,"not find max id");
+            CloseDbCon(g_mysql_conn);
+            g_mysql_conn = NULL;
+            return -1;
+        }
+        if (NULL != dbResult && dbResult->nrow > 0)
+        {
+            if (NULL != dbResult->rows[0][0])
+            {
+                write_log(LOG_DEBUG,"maxid = %s",dbResult->rows[0][0]);
+                uid = atoi(dbResult->rows[0][0]);
+            } 
+            else
+            {
+                write_log(LOG_ERROR,"not have result by id:%d");
+                CloseDbCon(g_mysql_conn);
+                g_mysql_conn = NULL;
+                return -1;
+            }
+            FreeDbResult(dbResult);
+            dbResult = NULL; 
+        }
+        else
+        {
+            write_log(LOG_ERROR,"not have result by id:%d");
+            CloseDbCon(g_mysql_conn);
+            g_mysql_conn = NULL;
+            return -1;
+        }
+        if (dbResult)
+        {
+            FreeDbResult(dbResult);
+            dbResult = NULL; 
+        }
+    }//mysqlconn
+    uid += 3;
+    CloseDbCon(g_mysql_conn);
+    g_mysql_conn = NULL;
+    return uid;
+}
+
+/*
+*name:packet_deal_chat_message
+*inputparam:packet
+*return: -1:deal error 0:success 1:password/id error 
+*describe:处理转发聊天消息
+*/
+int packet_deal_register_verify_code(cJSON *packet,CHAT_CONNECT *chat_conn)
+{
+    if (NULL == packet || NULL == chat_conn)
+    {
+        return -1;
+    }
+    /*解析数据包*/
+    cJSON *node = NULL;
+    char email[MAXLINE] = {0};
+
+    node = cJSON_GetObjectItem(packet,STR_MAIL);
+    if (NULL == node)
+    {
+        //未发现send_id
+        write_log(LOG_WARNING,"not find email");
+        return -1;
+    }
+    else
+    {
+        if (cJSON_String == node->type)
+        {
+            strncpy(email,node->valuestring,sizeof(email));
+            write_log(LOG_DEBUG,"email = %s",email);
+        }
+    }
+    /*解析完成，生成验证码*/
+    chat_conn->verify_code = create_verify_code();
+
+    char cmd_str[MAXLINE] = {0};
+    /*调用python 脚本发送给用户*/
+    snprintf(cmd_str, sizeof(cmd_str),EMAIL_SEND_CMD,email,chat_conn->verify_code);
+    write_log(LOG_DEBUG,"EMAIL_SEND:%s",cmd_str);
+    system(cmd_str);
+
+}
+
+/*
+*name:packet_deal_register_message
+*inputparam:packet
+*return: -1:deal error 0:success 1:password/id error 
+*describe:注册请求处理
+*/
+
+int packet_deal_register_message(cJSON *packet,CHAT_CONNECT *chat_conn)
+{
+    int ret = -1;
+    int uid = -1;
+    char send_packet[MAXLINE] = {0};
+    char cmd_str[MAXLINE] = {0};
+    if (NULL == packet || NULL == chat_conn)    
+    {
+        construct_register_response(send_packet,-1,"注册失败-未知错误");
+        goto RET_FLAG;
+    }
+    /*解析数据包*/
+    cJSON *node = NULL;
+    char icon[MAX_LEN_ICON] = {0};
+    char user_name[MAX_LEN_USERNAME] = {0};
+    char password[MAX_LEN_PASSWORD] = {0};
+    char real_name[MAX_LEN_USERNAME] = {0};
+    char address[MAX_LEN_ADDRESS] = {0};
+    char mail[MAX_LEN_MAIL] = {0};
+    int verify_code = 0;
+
+    node = cJSON_GetObjectItem(packet,STR_ICON);
+    if (NULL == node)
+    {
+        //未发现icon
+        write_log(LOG_WARNING,"not find ICON");
+        construct_register_response(send_packet,uid,"注册失败-未知错误");
+        goto RET_FLAG;
+    }
+    else
+    {
+        if (cJSON_String == node->type)
+        {
+            strncpy(icon,node->valuestring,sizeof(icon));
+            write_log(LOG_DEBUG,"email = %s",icon);
+        }
+    }
+    
+    /*verify_code*/
+    node = cJSON_GetObjectItem(packet,STR_VERIFY_CODE);
+    if (NULL == node)
+    {
+        //verify_code
+        write_log(LOG_WARNING,"not find verify_code");
+        construct_register_response(send_packet,uid,"注册失败-未知错误");
+        goto RET_FLAG;
+    }
+    else
+    {
+        if (cJSON_Number == node->type)
+        {
+            verify_code = node->valueint;
+            write_log(LOG_DEBUG,"verify code = %d",verify_code);
+        }
+    }
+    /*校验验证码*/
+    if (verify_code != chat_conn->verify_code)
+    {
+        /*验证码错误*/
+        construct_register_response(send_packet,uid,"注册失败-验证码错误");
+        goto RET_FLAG;
+    }
+
+    /*user_name*/
+    node = cJSON_GetObjectItem(packet,STR_USERNAME);
+    if (NULL == node)
+    {
+        //未发现user_name
+        write_log(LOG_WARNING,"not find user_name");
+        construct_register_response(send_packet,uid,"注册失败-未知错误");
+        goto RET_FLAG;
+    }
+    else
+    {
+        if (cJSON_String == node->type)
+        {
+            strncpy(user_name,node->valuestring,sizeof(user_name));
+            write_log(LOG_DEBUG,"user_name = %s",user_name);
+        }
+    }
+    /*pwd*/
+    node = cJSON_GetObjectItem(packet,STR_PASSWORD);
+    if (NULL == node)
+    {
+        //未发现PWD
+        write_log(LOG_WARNING,"not find pwd");
+        construct_register_response(send_packet,uid,"注册失败-未知错误");
+        goto RET_FLAG;
+    }
+    else
+    {
+        if (cJSON_String == node->type)
+        {
+            strncpy(password,node->valuestring,sizeof(password));
+            write_log(LOG_DEBUG,"password = %s",password);
+        }
+    }
+
+    /*real_name*/
+    node = cJSON_GetObjectItem(packet,STR_REAL_NAME);
+    if (NULL == node)
+    {
+        //未发现PWD
+        write_log(LOG_WARNING,"not find real_name");
+        goto RET_FLAG;
+    }
+    else
+    {
+        if (cJSON_String == node->type)
+        {
+            strncpy(real_name,node->valuestring,sizeof(real_name));
+            write_log(LOG_DEBUG,"real_name = %s",real_name);
+        }
+    }
+
+    /*address*/
+    node = cJSON_GetObjectItem(packet,STR_ADDRESS);
+    if (NULL == node)
+    {
+        //未发现address
+        write_log(LOG_WARNING,"not find address");
+        goto RET_FLAG;
+    }
+    else
+    {
+        if (cJSON_String == node->type)
+        {
+            strncpy(address,node->valuestring,sizeof(address));
+            write_log(LOG_DEBUG,"real_name = %s",address);
+        }
+    }
+
+    /*mail*/
+    node = cJSON_GetObjectItem(packet,STR_MAIL);
+    if (NULL == node)
+    {
+        //mail
+        write_log(LOG_WARNING,"not find mail");
+        goto RET_FLAG;
+    }
+    else
+    {
+        if (cJSON_String == node->type)
+        {
+            strncpy(mail,node->valuestring,sizeof(mail));
+            write_log(LOG_DEBUG,"mail = %s",mail);
+        }
+    }
+    /*生成id*/
+    uid = generate_user_id();
+    if (-1 == uid)
+    {
+        write_log(LOG_ERROR,"generate uid fail");
+        construct_register_response(send_packet,uid,"注册失败");
+        goto RET_FLAG;
+    }
+    save_user_info_to_mysql(uid,icon,user_name,password,real_name,address,mail);
+    construct_register_response(send_packet,uid,"注册成功");
+    
+    
+
+RET_FLAG:
+    write_log(LOG_DEBUG,"send");
+    write_data_to_socket_fd(chat_conn->connect_fd,send_packet,strlen(send_packet));
+    /*调用python 脚本发送给用户*/
+    snprintf(cmd_str, sizeof(cmd_str),EMAIL_SEND_UID,mail,uid);
+    write_log(LOG_DEBUG,"EMAIL_SEND:%s",cmd_str);
+    system(cmd_str);
+    return ret;
+}
+
+/*
 *name:save_sort_histort_to_mysql
 *inputparam:id,sort_text,time
 *return: -1:deal error 0:success 
@@ -664,21 +1032,50 @@ int save_sort_histort_to_mysql(int id, char* sort_text, unsigned int time_now)
         
     }//mysqlconn
     CloseDbCon(g_mysql_conn);
+    g_mysql_conn = NULL;
     return ret;
 }
 
 /*
-*name:get_time_now
-*inputparam:void
-*return: -1:deal error other:time
-*describe:获取当前时间戳
+*name:save_user_info_to_mysql
+*inputparam:id,sort_text,time
+*return: -1:deal error 0:success 
+*describe:将搜索内容保存至mysql
+ char icon[MAX_LEN_ICON] = {0};
+    char user_name[MAX_LEN_USERNAME] = {0};
+    char password[MAX_LEN_PASSWORD] = {0};
+    char real_name[MAX_LEN_USERNAME] = {0};
+    char address[MAX_LEN_ADDRESS] = {0};
+    char mail[MAX_LEN_MAIL] = {0};
 */
 
-unsigned int get_time_now()
+int save_user_info_to_mysql(int u_id, char* icon, char* user_name,char* pwd, char* real_name, char* address, char* mail)
 {
-    struct timeval tv;
-    gettimeofday(&tv,NULL);
-    return tv.tv_sec;
+    char sql_str[MAX_LEN_SQL_STR]={0};
+    int ret = -1;
+    /*插入mysql*/
+    void *g_mysql_conn = NULL;
+    init_mysql_conn(&g_mysql_conn);
+    if(NULL == g_mysql_conn)
+    {
+        write_log(LOG_ERROR,"connect mysql error");
+        return -1;
+    }
+    //`user_id`,`user_name`,`real_name`,`address`,`pwd`,`email`,`icon`,`register_time`
+    write_log(LOG_DEBUG,"time:%ld",get_time_now());
+    //                                                      %d, '%s',     '%s',     '%s',  '%s','%s','%s',%ld
+    snprintf(sql_str, sizeof(sql_str),SQL_INSERT_USER_INFO,u_id,user_name,real_name,address,pwd,mail,icon,get_time_now());
+    write_log(LOG_DEBUG,"%s",sql_str);
+    if (NULL != g_mysql_conn)
+    {
+        //insert
+        ret = db_ExecSql(g_mysql_conn,sql_str);
+        write_log(LOG_DEBUG,"g not null %d",ret);
+        
+    }//mysqlconn
+    CloseDbCon(g_mysql_conn);
+    g_mysql_conn = NULL;
+    return ret;
 }
 
 /*
@@ -744,6 +1141,10 @@ int packet_deal_music_sort_message(cJSON *packet,CHAT_CONNECT *chat_conn)
 */
 int chat_message_deal(char* data,int data_len,CHAT_CONNECT *chat_conn)
 {
+    if (NULL == data || 0 == data_len)
+    {
+        return 0;
+    }
     //从data中解析json结构
     cJSON *json = cJSON_Parse(data);
     cJSON *node = NULL;
@@ -775,7 +1176,12 @@ int chat_message_deal(char* data,int data_len,CHAT_CONNECT *chat_conn)
     case MESSAGE_CHAT_DATE:     /*聊天消息*/
         packet_deal_chat_message(data,json,chat_conn);
         break;
-
+    case MESSAGE_VERIFY_REQ:    /*注册验证码请求*/
+        packet_deal_register_verify_code(json,chat_conn);
+        break;
+    case MESSAGE_REGISTER_REQ:  /*注册请求*/
+        packet_deal_register_message(json,chat_conn);
+        break;
     case MESSAGE_MUSIC_SORT: /*音乐搜索*/
         packet_deal_music_sort_message(json,chat_conn);
     default:

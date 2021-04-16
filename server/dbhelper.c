@@ -3,6 +3,11 @@
 void* InitDbCon2(const char *host, const char *user,const char *passwd, int port, const char *db)
 {
 	MYSQL *con = malloc(sizeof(MYSQL));
+	if (NULL == con)
+	{
+		printf("malloc error");
+		return NULL;
+	}
  	mysql_init(con);  
 	my_bool reconnect =1;
 	mysql_options(con,MYSQL_OPT_RECONNECT,&reconnect);

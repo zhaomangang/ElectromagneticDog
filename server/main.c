@@ -80,6 +80,7 @@ void* connect_deal(void *arg)
             {
                 
             }
+            memset(buff,0,sizeof(buff));
         }
         else 
         {
